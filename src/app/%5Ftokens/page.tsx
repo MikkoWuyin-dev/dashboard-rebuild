@@ -99,6 +99,34 @@ export default function TokensPage() {
           !?&amp;
         </p>
       </section>
+
+      <section className="mt-12 space-y-3">
+        <h2 className="text-lg font-semibold">Status utilities</h2>
+        <div className="flex flex-wrap items-center gap-3">
+          <span
+            data-util="bg-success"
+            className="inline-block h-10 w-24 rounded-md bg-success"
+          />
+          <span
+            data-util="text-success-foreground"
+            className="inline-flex h-10 w-24 items-center justify-center rounded-md bg-success text-success-foreground"
+          >
+            Aa
+          </span>
+          <span
+            data-util="bg-info"
+            className="inline-block h-10 w-24 rounded-md bg-info"
+          />
+          <span
+            data-util="bg-warning"
+            className="inline-block h-10 w-24 rounded-md bg-warning"
+          />
+          <span
+            data-util="border-subtle"
+            className="inline-block h-10 w-24 rounded-md border-2 border-subtle bg-background"
+          />
+        </div>
+      </section>
     </main>
   );
 }
