@@ -1,17 +1,22 @@
 // Measures the shell region (sidebar column + header bar) for each capture
-// viewport against the running rebuild and writes reference/shell-boxes.json.
-// tools/diff.mjs crops BOTH sides of every pair to these rects before
-// comparing, so shell regressions are visible even when the full-page images
-// differ in height. The two rects are stored separately — their union would
-// cover most of the content area, which is exactly what we want to exclude.
-// Boxes come from the live DOM — nothing is hardcoded.
+// viewport against the LIVE TARGET SITE and writes reference/shell-boxes.json.
+// The crop region is defined by the reference, never by the build being
+// measured — otherwise a wrongly-sized local shell defines its own crop and
+// part of the target's shell falls outside the region. tools/diff.mjs crops
+// BOTH sides of every pair to these rects before comparing, so shell
+// regressions are visible even when the full-page images differ in height.
+// The two rects are stored separately — their union would cover most of the
+// content area, which is exactly what we want to exclude.
 //
-// Usage: BASE_URL=http://localhost:3000 node tools/measure-shell.mjs
+// Usage: node tools/measure-shell.mjs
+// (REF_BASE_URL overrides the target; no localhost involvement.)
 import { chromium } from "playwright";
 import { writeFileSync } from "node:fs";
 import { VIEWPORTS } from "./shoot.mjs";
 
-const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+const BASE_URL =
+  process.env.REF_BASE_URL ||
+  "https://shadcncraft-sales-marketing-dashboard.vercel.app";
 const OUT = "reference/shell-boxes.json";
 
 const browser = await chromium.launch();
@@ -57,4 +62,4 @@ for (const vp of VIEWPORTS) {
 
 await browser.close();
 writeFileSync(OUT, JSON.stringify(boxes, null, 2) + "\n");
-console.log(`wrote ${OUT}`);
+console.log(`wrote ${OUT} (measured against ${BASE_URL})`);
