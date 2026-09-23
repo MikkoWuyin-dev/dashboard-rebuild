@@ -1,0 +1,173 @@
+[
+  {
+    "stage": "Qualified",
+    "count": 412,
+    "value": "$1.77M",
+    "deals": [
+      {
+        "initials": "FG",
+        "company": "Fieldstone Group",
+        "type": "New Logo",
+        "industry": "Consulting",
+        "winProbability": 45,
+        "city": "Portland, US",
+        "region": "NA-West",
+        "closeDate": "Sep 3, 2026",
+        "amount": "$5,800",
+        "status": "New",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "CS",
+        "company": "Cobalt Systems",
+        "type": "New Logo",
+        "industry": "Fintech",
+        "winProbability": 40,
+        "city": "Denver, US",
+        "region": "NA-West",
+        "closeDate": "Sep 18, 2026",
+        "amount": "$4,400",
+        "status": "Working",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "JA",
+        "company": "Juniper Analytics",
+        "type": "New Logo",
+        "industry": "Analytics",
+        "winProbability": 30,
+        "city": "Austin, US",
+        "region": "NA-West",
+        "closeDate": "Oct 2, 2026",
+        "amount": "$3,900",
+        "status": "New",
+        "forecast": "Forecast tracked"
+      }
+    ]
+  },
+  {
+    "stage": "Proposal",
+    "count": 186,
+    "value": "$800K",
+    "deals": [
+      {
+        "initials": "NL",
+        "company": "Northstar Labs",
+        "type": "New Logo",
+        "industry": "SaaS",
+        "winProbability": 48,
+        "city": "Toronto, CA",
+        "region": "NA-East",
+        "closeDate": "Aug 22, 2026",
+        "amount": "$8,900",
+        "status": "Working",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "HL",
+        "company": "Harborview Logistics",
+        "type": "Expansion",
+        "industry": "Logistics",
+        "winProbability": 55,
+        "city": "Rotterdam, NL",
+        "region": "EMEA",
+        "closeDate": "Sep 25, 2026",
+        "amount": "$9,600",
+        "status": "On track",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "BS",
+        "company": "Beacon Software",
+        "type": "New Logo",
+        "industry": "DevTools",
+        "winProbability": 50,
+        "city": "Berlin, DE",
+        "region": "EMEA",
+        "closeDate": "Sep 30, 2026",
+        "amount": "$7,100",
+        "status": "Working",
+        "forecast": "Forecast tracked"
+      }
+    ]
+  },
+  {
+    "stage": "Negotiation",
+    "count": 84,
+    "value": "$361K",
+    "deals": [
+      {
+        "initials": "AC",
+        "company": "Acme Corp",
+        "type": "Expansion",
+        "industry": "Software",
+        "winProbability": 62,
+        "city": "New York, US",
+        "region": "NA-East",
+        "closeDate": "Aug 15, 2026",
+        "amount": "$12,400",
+        "status": "On track",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "MH",
+        "company": "Meridian Health",
+        "type": "Renewal",
+        "industry": "Healthcare",
+        "winProbability": 38,
+        "city": "Chicago, US",
+        "region": "NA-East",
+        "closeDate": "Sep 12, 2026",
+        "amount": "$7,400",
+        "status": "At risk",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "CM",
+        "company": "Crestline Media",
+        "type": "Renewal",
+        "industry": "Media",
+        "winProbability": 64,
+        "city": "Sydney, AU",
+        "region": "APAC",
+        "closeDate": "Aug 29, 2026",
+        "amount": "$10,800",
+        "status": "On track",
+        "forecast": "Forecast tracked"
+      }
+    ]
+  },
+  {
+    "stage": "Contract",
+    "count": 38,
+    "value": "$163K",
+    "deals": [
+      {
+        "initials": "BS",
+        "company": "Brightline Studio",
+        "type": "New Logo",
+        "industry": "Design",
+        "winProbability": 85,
+        "city": "London, UK",
+        "region": "EMEA",
+        "closeDate": "Aug 8, 2026",
+        "amount": "$6,200",
+        "status": "Committed",
+        "forecast": "Forecast tracked"
+      },
+      {
+        "initials": "SF",
+        "company": "Summit Freight",
+        "type": "Expansion",
+        "industry": "Logistics",
+        "winProbability": 82,
+        "city": "Madrid, ES",
+        "region": "EMEA",
+        "closeDate": "Aug 19, 2026",
+        "amount": "$5,400",
+        "status": "Committed",
+        "forecast": "Forecast tracked"
+      }
+    ]
+  }
+]

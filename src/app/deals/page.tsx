@@ -1,3 +1,5 @@
-export default function Deals() {
-  return <h1>Deals</h1>;
+import { DealsBoard } from "@/components/deals-board"
+
+export default function DealsPage() {
+  return <DealsBoard />
 }
