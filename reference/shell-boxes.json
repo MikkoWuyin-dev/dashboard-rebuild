@@ -1,0 +1,39 @@
+{
+  "390": {
+    "sidebar": null,
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 56
+    }
+  },
+  "1024": {
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 768
+    },
+    "header": {
+      "x": 256,
+      "y": 8,
+      "width": 760,
+      "height": 56
+    }
+  },
+  "1440": {
+    "sidebar": {
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 900
+    },
+    "header": {
+      "x": 256,
+      "y": 8,
+      "width": 1176,
+      "height": 56
+    }
+  }
+}

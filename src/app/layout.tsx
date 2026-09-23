@@ -34,7 +34,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           defaultTheme="system"
           disableTransitionOnChange
         >
-          <SidebarProvider>
+          {/* h-svh + min-h-0 (the target's own wrapper classes) constrain the
+              height chain so the inner overflow-auto container scrolls, as on
+              the target — without it the document grows instead. */}
+          <SidebarProvider className="h-svh min-h-0">
             <AppSidebar />
             <SidebarInset className="min-h-0 overflow-hidden">
               <SiteHeader />

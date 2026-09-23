@@ -4,6 +4,12 @@
 //
 // BASE_URL (default http://localhost:3000) selects the local server. It must
 // not be hardcoded — the dev server's port is whatever it is.
+//
+// Besides the full-image comparison, each pair gets a "shellPercent": a
+// second pixelmatch run restricted to the shell region (sidebar column +
+// header bar), cropped from BOTH images by DOM-measured bounding boxes in
+// reference/shell-boxes.json. Height mismatches therefore cannot hide shell
+// regressions: the shell lives in the top band present on both sides.
 import { chromium } from "playwright";
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -15,6 +21,42 @@ const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 const CURRENT_DIR = join(process.cwd(), "current");
 const REF_DIR = join(process.cwd(), "reference");
 const DIFFS_DIR = join(process.cwd(), "diffs");
+
+// Shell region boxes, per viewport width, measured from the live DOM by
+// tools/measure-shell.mjs. Rects may be null (mobile sidebar is a Sheet).
+const SHELL_BOXES = existsSync(join(REF_DIR, "shell-boxes.json"))
+  ? JSON.parse(readFileSync(join(REF_DIR, "shell-boxes.json"), "utf8"))
+  : null;
+
+// Extract a sub-rectangle as a new PNG (clamped to the image bounds).
+function cropPng(img, rect) {
+  const x = Math.max(0, Math.min(rect.x, img.width - 1));
+  const y = Math.max(0, Math.min(rect.y, img.height - 1));
+  const width = Math.max(1, Math.min(rect.width, img.width - x));
+  const height = Math.max(1, Math.min(rect.height, img.height - y));
+  const out = new PNG({ width, height });
+  PNG.bitblt(img, out, x, y, width, height, 0, 0);
+  return { img: out, width, height };
+}
+
+// pixelmatch over both shell rects; returns summed mismatch ratio.
+function compareShell(img1, img2, shellRects, diffDir, name) {
+  let mismatched = 0;
+  let total = 0;
+  for (const [key, rect] of Object.entries(shellRects)) {
+    if (!rect) continue;
+    const a = cropPng(img1, rect);
+    const b = cropPng(img2, rect);
+    if (a.width !== b.width || a.height !== b.height) return null; // shell itself resized
+    const d = new PNG({ width: a.width, height: a.height });
+    mismatched += pixelmatch(a.img.data, b.img.data, d.data, a.width, a.height, {
+      threshold: 0.1,
+    });
+    total += a.width * a.height;
+    writeFileSync(join(diffDir, `${name}-shell-${key}.png`), PNG.sync.write(d));
+  }
+  return total ? { mismatched, total, percent: +((mismatched / total) * 100).toFixed(2) } : null;
+}
 
 const slug = (route) => (route === "/" ? "root" : route.slice(1));
 
@@ -54,14 +96,23 @@ for (const route of ROUTES) {
       const img1 = PNG.sync.read(readFileSync(currentPng));
       const img2 = PNG.sync.read(readFileSync(refPng));
 
+      // Shell sub-diff: crop both sides to the shell rects and compare. Works
+      // across height mismatches because the shell band exists on both sides.
+      const shellRects = SHELL_BOXES?.[String(vp.width)];
+      const shell =
+        img1.width === img2.width && shellRects
+          ? compareShell(img1, img2, shellRects, DIFFS_DIR, name)
+          : null;
+
       // Size mismatch = layout bug. Do not crash, do not resize — record it.
       if (img1.width !== img2.width || img1.height !== img2.height) {
         heightMismatches.push({
           name,
           local: `${img1.width}x${img1.height}`,
           ref: `${img2.width}x${img2.height}`,
+          shellPercent: shell ? shell.percent : null,
         });
-        results.push({ name, error: "HEIGHT MISMATCH" });
+        results.push({ name, error: "HEIGHT MISMATCH", shellPercent: shell ? shell.percent : null });
         continue;
       }
 
@@ -76,6 +127,7 @@ for (const route of ROUTES) {
         mismatchedPixels,
         totalPixels: width * height,
         percent: +((mismatchedPixels / (width * height)) * 100).toFixed(2),
+        shellPercent: shell ? shell.percent : null,
       });
     }
   }
@@ -89,10 +141,27 @@ const scored = results
   .sort((a, b) => b.percent - a.percent);
 
 for (const m of heightMismatches) {
-  console.log(`${m.name}: HEIGHT MISMATCH local=${m.local} ref=${m.ref}`);
+  console.log(
+    `${m.name}: HEIGHT MISMATCH local=${m.local} ref=${m.ref}` +
+      (m.shellPercent !== null && m.shellPercent !== undefined ? ` (shell ${m.shellPercent}%)` : "")
+  );
 }
 for (const r of results.filter((r) => r.error && r.error !== "HEIGHT MISMATCH")) {
   console.log(`${r.name}: ${r.error}`);
+}
+
+const withShell = results.filter((r) => r.shellPercent != null);
+if (withShell.length) {
+  console.log("\nShell region mismatch (sidebar + header), all pairs sorted:");
+  console.table(
+    [...withShell]
+      .sort((a, b) => b.shellPercent - a.shellPercent)
+      .map((r) => ({ name: r.name, "shell %": r.shellPercent }))
+  );
+  const shellMean = +(
+    withShell.reduce((s, r) => s + r.shellPercent, 0) / withShell.length
+  ).toFixed(2);
+  console.log(`Mean shell mismatch: ${shellMean}%`);
 }
 
 console.log("\nTop 10 by % pixels differing (threshold 0.1):");
@@ -119,6 +188,9 @@ writeFileSync(
       threshold: 0.1,
       compared: scored.length,
       meanPercent: mean,
+      meanShellPercent: withShell.length
+        ? +(withShell.reduce((s, r) => s + r.shellPercent, 0) / withShell.length).toFixed(2)
+        : null,
       heightMismatches,
       results: scored,
     },
