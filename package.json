@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "capture:ref": "node tools/capture.mjs",
+    "diff": "node tools/diff.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -32,7 +34,9 @@
     "playwright": "^1.63.0",
     "shadcn": "^4.21.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0"
   },
   "packageManager": "pnpm@12.5.1"
 }
