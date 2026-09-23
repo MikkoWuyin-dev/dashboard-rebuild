@@ -2,8 +2,24 @@
 // taken. Both the reference capture (tools/capture.mjs) and the local rebuild
 // capture (tools/diff.mjs) MUST go through this module so that any pixel
 // difference between the two reflects the pages, not the capture conditions.
+//
+// Capture strategy: the target layout is h-svh with
+// main[data-slot="sidebar-inset"] set to overflow-hidden and an inner
+// overflow-auto container, so document.scrollHeight never exceeds the viewport
+// and Playwright's fullPage:true would capture exactly one screen. Instead we:
+//   1. take one full-viewport screenshot at scrollTop 0 (sidebar, header and
+//      content as a real visitor sees them), then
+//   2. scroll the inner container in clientHeight steps, screenshotting only
+//      the container's own bounding box (clipped to the viewport) at each
+//      step, and stitch that column below the first shot.
+// Fixed chrome (sidebar/header) therefore appears once, not repeated per
+// slice. Sticky elements pinned inside the container are skipped per slice so
+// they don't smear; they remain in their natural position from the first shot.
+// We deliberately do NOT relax overflow/height via CSS: panels use flex-1 and
+// h-full, so unclamping changes how tall they render and would capture a page
+// no real visitor ever sees.
 import { chromium } from "playwright";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 export const ROUTES = ["/", "/analytics", "/campaigns", "/deals", "/leads", "/customers", "/settings"];
@@ -69,58 +85,180 @@ async function pngLooksCorrupt(page, pngBuffer) {
   }, dataUrl);
 }
 
-// Scroll-and-stitch fallback: viewport shots stepped down the page, composited
-// on an off-DOM canvas inside the page, returned as a single PNG.
-async function scrollStitch(page, { mask } = {}) {
-  const shots = await page.evaluate(async () => {
-    const vh = window.innerHeight;
-    const total = document.documentElement.scrollHeight;
-    const positions = [];
-    for (let y = 0; y < total; y += vh) positions.push(y);
-    return { positions, vh, total };
-  });
-  const buffers = [];
-  for (const y of shots.positions) {
-    await page.evaluate((top) => window.scrollTo(0, top), y);
-    await page.waitForTimeout(180);
-    buffers.push((await page.screenshot({ mask })).toString("base64"));
-  }
-  const dataUrl = await page.evaluate(
-    async ({ b64s, vh, total }) => {
-      const imgs = [];
-      for (const b64 of b64s) {
-        const img = new Image();
-        await new Promise((res, rej) => {
-          img.onload = res;
-          img.onerror = rej;
-          img.src = `data:image/png;base64,${b64}`;
-        });
-        imgs.push(img);
+// Composite one viewport shot + the scrolled content column into a full-page
+// image. Runs inside the page on an off-DOM canvas; returns a PNG buffer.
+async function stitchInnerScroll(page, maskCount) {
+  // Start from the top so the viewport shot is the true first screen
+  // (matters when a previous stitch pass left the container scrolled).
+  await page.evaluate(() => {
+    const inset = document.querySelector('[data-slot="sidebar-inset"]');
+    if (!inset) return;
+    const cands = [...inset.querySelectorAll("*")].filter((el) => {
+      const s = getComputedStyle(el);
+      return s.overflowY === "auto" || s.overflowY === "scroll";
+    });
+    let sc = null,
+      best = -1;
+    for (const c of cands) {
+      const d = c.scrollHeight - c.clientHeight;
+      if (d > best) {
+        best = d;
+        sc = c;
       }
-      const canvas = document.createElement("canvas");
-      canvas.width = imgs[0].naturalWidth;
-      canvas.height = total;
-      const ctx = canvas.getContext("2d");
-      imgs.forEach((img, i) => {
-        const y = Math.min(i * vh, total - img.naturalHeight);
-        ctx.drawImage(img, 0, y);
+    }
+    if (sc) sc.scrollTop = 0;
+  });
+  await page.waitForTimeout(120);
+  const firstShot = (await page.screenshot({ mask: maskFromCount(page, maskCount) })).toString("base64");
+  const plan = await page.evaluate(() => {
+    const inset = document.querySelector('[data-slot="sidebar-inset"]');
+    if (!inset) return null;
+    const cands = [...inset.querySelectorAll("*")].filter((el) => {
+      const s = getComputedStyle(el);
+      return s.overflowY === "auto" || s.overflowY === "scroll";
+    });
+    let sc = null,
+      best = -1;
+    for (const c of cands) {
+      const d = c.scrollHeight - c.clientHeight;
+      if (d > best) {
+        best = d;
+        sc = c;
+      }
+    }
+    if (!sc || sc.scrollHeight <= sc.clientHeight + 1) return null;
+    const r = sc.getBoundingClientRect();
+    return {
+      scrollHeight: sc.scrollHeight,
+      clientHeight: sc.clientHeight,
+      box: { x: r.x, y: r.y, width: r.width, height: r.height },
+      vw: window.innerWidth,
+      vh: window.innerHeight,
+    };
+  });
+  if (!plan) return null;
+
+  const slices = [];
+  const steps = [];
+  for (let y = 0; y < plan.scrollHeight; y += plan.clientHeight) steps.push(y);
+  if (steps[steps.length - 1] < plan.scrollHeight - 2) steps.push(plan.scrollHeight); // final partial step
+  // The scroll position clamps to scrollHeight - clientHeight; slices dedupe
+  // through the actual scrollTop read back per slice, so over-pushing is safe.
+
+  for (const y of steps) {
+    await page.evaluate((top) => {
+      const inset = document.querySelector('[data-slot="sidebar-inset"]');
+      const cands = [...inset.querySelectorAll("*")].filter((el) => {
+        const s = getComputedStyle(el);
+        return s.overflowY === "auto" || s.overflowY === "scroll";
       });
+      let sc = null,
+        best = -1;
+      for (const c of cands) {
+        const d = c.scrollHeight - c.clientHeight;
+        if (d > best) {
+          best = d;
+          sc = c;
+        }
+      }
+      sc.scrollTop = top;
+    }, y);
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+    await page.waitForTimeout(150);
+
+    // Clip = the container's box intersected with the viewport; content is
+    // scrolled under it, so this is the newly revealed band of the column.
+    const clip = await page.evaluate(() => {
+      const inset = document.querySelector('[data-slot="sidebar-inset"]');
+      const cands = [...inset.querySelectorAll("*")].filter((el) => {
+        const s = getComputedStyle(el);
+        return s.overflowY === "auto" || s.overflowY === "scroll";
+      });
+      let sc = null,
+        best = -1;
+      for (const c of cands) {
+        const d = c.scrollHeight - c.clientHeight;
+        if (d > best) {
+          best = d;
+          sc = c;
+        }
+      }
+      const r = sc.getBoundingClientRect();
+      // Sticky elements pinned at the top of the container would repeat in
+      // every slice; record how much of this slice they cover so the stitch
+      // can skip it.
+      let pinOverlap = 0;
+      for (const el of sc.querySelectorAll("*")) {
+        const s = getComputedStyle(el);
+        if (s.position !== "sticky") continue;
+        const er = el.getBoundingClientRect();
+        if (er.top <= r.top + 2 && er.height > 4 && er.height < r.height - 8) {
+          pinOverlap = Math.max(pinOverlap, er.bottom - r.top);
+        }
+      }
+      return {
+        x: Math.max(0, r.x),
+        y: Math.max(0, r.y),
+        width: Math.min(r.width, window.innerWidth - Math.max(0, r.x)),
+        height: Math.min(r.height, window.innerHeight - Math.max(0, r.y)),
+        pinOverlap,
+        scrollTop: sc.scrollTop,
+      };
+    });
+    if (clip.width <= 0 || clip.height <= 0) continue;
+    const buf = await page.screenshot({ clip, mask: maskFromCount(page, maskCount) });
+    slices.push({ y: clip.scrollTop, clip, b64: buf.toString("base64") });
+  }
+
+  const dataUrl = await page.evaluate(
+    async ({ firstShot, slices, plan }) => {
+      const load = (src) =>
+        new Promise((res, rej) => {
+          const img = new Image();
+          img.onload = () => res(img);
+          img.onerror = () => rej(new Error("slice PNG failed to decode"));
+          img.src = `data:image/png;base64,${src}`;
+        });
+      const first = await load(firstShot);
+      const canvas = document.createElement("canvas");
+      canvas.width = plan.vw;
+      // Content coordinate c sits at canvas y = containerTop + c, so the
+      // canvas must extend to containerTop + scrollHeight or the bottom band
+      // of content would be clipped.
+      const contentTop = Math.max(0, plan.box.y);
+      canvas.height = Math.max(plan.vh, contentTop + plan.scrollHeight);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(first, 0, 0);
+      for (const s of slices) {
+        const img = await load(s.b64);
+        // Skip the pinned-sticky band at the top of the slice; draw the rest.
+        const skip = Math.min(s.clip.pinOverlap || 0, img.height - 1);
+        const drawH = img.height - skip;
+        if (drawH > 0) ctx.drawImage(img, 0, skip, img.width, drawH, s.clip.x, s.clip.y + s.y + skip, img.width, drawH);
+      }
       return canvas.toDataURL("image/png");
     },
-    { b64s: buffers, vh: shots.vh, total: shots.total }
+    { firstShot, slices, plan }
   );
-  return Buffer.from(dataUrl.split(",")[1], "base64");
+  const dims = { w: plan.vw, h: Math.max(plan.vh, Math.max(0, plan.box.y) + plan.scrollHeight) };
+  return { buffer: Buffer.from(dataUrl.split(",")[1], "base64"), plan, dims };
+}
+
+// Rebuild the mask locator list (locators can't cross the Node/page boundary).
+function maskFromCount(page, count) {
+  if (!count) return undefined;
+  return Array.from({ length: count }, () => page.locator('[data-slot="avatar-image"]'));
 }
 
 // Capture every route x theme x viewport combination of one site into outDir.
 // Identical logic for the live target and the local rebuild: same viewports,
 // same theme switching (localStorage "theme" + reload), same aria-busy settle,
 // same animation-killing CSS, same avatar masking, same corruption fallback.
-export async function shootAll({ baseUrl, outDir, resume = false, log = console }) {
+export async function shootAll({ baseUrl, outDir, resume = false, log = console, routes = ROUTES, themes = THEMES, viewports = VIEWPORTS }) {
   const combos = [];
-  for (const route of ROUTES)
-    for (const theme of THEMES)
-      for (const vp of VIEWPORTS) combos.push({ route, theme, vp });
+  for (const route of routes)
+    for (const theme of themes)
+      for (const vp of viewports) combos.push({ route, theme, vp });
 
   const alreadyDone = (c) =>
     existsSync(pngPath(outDir, c.route, c.theme, c.vp)) &&
@@ -135,7 +273,7 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console 
 
   const browser = await chromium.launch();
   const failures = [];
-  const stitches = [];
+  const stitched = [];
 
   for (const { route, theme, vp } of pending) {
     const label = `${route} ${theme} ${vp.width}x${vp.height}`;
@@ -161,20 +299,31 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console 
       // Mask every avatar image with the default mask colour: our avatars are
       // placeholders and can never match the target's photos, so blanking both
       // sides cancels them out instead of leaving permanent noise.
-      const avatarMask = page.locator('[data-slot="avatar-image"]');
+      const maskCount = await page.locator('[data-slot="avatar-image"]').count();
 
       let png = pngPath(outDir, route, theme, vp);
-      let buffer = await page.screenshot({ path: png, fullPage: true, mask: [avatarMask] });
-      const check = await pngLooksCorrupt(page, buffer);
-      if (check.corrupt) {
-        log.log(`STITCH ${label}: fullPage showed repeated slices, scroll-and-stitching`);
-        stitches.push(label);
-        buffer = await scrollStitch(page, { mask: [avatarMask] });
-        writeFileSync(png, buffer);
+      let buffer;
+      let dims;
+      const stitchedResult = await stitchInnerScroll(page, maskCount);
+      if (stitchedResult) {
+        stitched.push(label);
+        buffer = stitchedResult.buffer;
+        dims = stitchedResult.dims;
+        const check = await pngLooksCorrupt(page, buffer);
+        if (check.corrupt) {
+          log.log(`RETRY ${label}: stitched image showed repeated slices, re-stitching once`);
+          const again = await stitchInnerScroll(page, maskCount);
+          buffer = again ? again.buffer : buffer;
+        }
+      } else {
+        // No inner overflow: the page genuinely fits one screen.
+        buffer = await page.screenshot({ fullPage: true, mask: maskFromCount(page, maskCount) });
+        const check = await pngLooksCorrupt(page, buffer);
+        dims = { w: check.w, h: check.h };
       }
-
+      writeFileSync(png, buffer);
       writeFileSync(htmlPath(outDir, route, theme, vp), await page.content());
-      log.log(`OK  ${label} (${check.w}x${check.h})`);
+      log.log(`OK  ${label} (${dims.w}x${dims.h})`);
     } catch (err) {
       const msg = err && err.message ? err.message : String(err);
       log.error(`FAILED ${label}: ${msg.split("\n")[0]}`);
@@ -187,10 +336,10 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console 
   await browser.close();
 
   log.log(`\nCaptured ${pending.length - failures.length}/${pending.length}.`);
-  if (stitches.length) log.log(`Scroll-and-stitch used for: ${stitches.join(", ")}`);
+  if (stitched.length) log.log(`Inner-scroll stitch used for: ${stitched.length}/${pending.length} shots`);
   if (failures.length) {
     log.log("Did not complete:");
     for (const f of failures) log.log(`  - ${f}`);
   }
-  return { captured: pending.length - failures.length, total: pending.length, failures, stitches };
+  return { captured: pending.length - failures.length, total: pending.length, failures, stitched };
 }
