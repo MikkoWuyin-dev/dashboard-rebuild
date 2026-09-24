@@ -1,9 +1,55 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# Rebuild conventions
 
-# This is NOT the Next.js you know
+A from-scratch rebuild of a live dashboard, verified by screenshot diffing.
+Read this before changing anything.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## Ground truth
+- `reference/` holds 42 PNG + 42 HTML captures of the LIVE target, fully
+  settled. These are the specification. Never edit or regenerate them unless
+  explicitly told to re-capture.
+- Class strings, layout and copy come from
+  `reference/<route>-<theme>-<width>.html`. Do not invent spacing values.
+- `src/data/*.json` fixtures hold extracted content. Use the strings exactly:
+  text width drives layout, so substitutions prevent convergence.
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+## The harness
+- `pnpm diff` shoots localhost into `current/`, compares against
+  `reference/`, writes `diffs/report.json`.
+- Local URL comes from BASE_URL. Reference measurement uses REF_BASE_URL,
+  defaulting to the live target. Never point REF_BASE_URL at localhost.
+- `tools/shoot.mjs` is the single capture implementation. Reference and local
+  MUST run identical logic.
+- Pages scroll an inner container, not the document. Capture stitches slices
+  of that container. Do NOT "fix" this by overriding overflow or height --
+  panels use flex-1 and would render at the wrong size.
+- Avatars are masked on both sides via [data-slot="avatar"]. Our placeholders
+  differ from the target's photos by design and are excluded.
 
-<!-- END:nextjs-agent-rules -->
+## Rules that do not bend
+- Never raise the pixelmatch threshold.
+- Never edit, regenerate or resize reference images to make a number fall.
+- Never add fixed heights to force a match.
+- Never screenshot before [aria-busy="true"] clears.
+- One deliverable per prompt. Stop when it is done.
+- Commit at the end of every prompt, before reporting.
+
+## Decisions already made
+- Next 16.3.4, React 19.2.8, Tailwind v4, shadcn on the BASE UI base (not
+  Radix), preset base-nova, baseColor neutral.
+- Geist / Geist Mono via next/font/google as --font-sans / --font-mono.
+- globals.css tokens are verbatim from the target. Do not adjust or convert
+  to oklch.
+- Badge colours come from the reference's own utility classes
+  (bg-green-100/text-green-700 and friends), NOT the semantic
+  success/warning tokens. Only "At risk" and "Committed" are coloured; New,
+  Working, On track and all region badges are default variants.
+- Kanban column reordering uses native pointer events. No dnd library.
+
+## React 19 gotcha already hit
+Mutating a ref inside a setState updater breaks in dev only: StrictMode
+double-invokes updaters and the second pass reads the cleared value. Capture
+the value before the updater.
+
+## Reporting
+End every response with a plain-language "Change log", per the standing
+instruction in each prompt.
