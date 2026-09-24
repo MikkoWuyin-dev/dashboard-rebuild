@@ -9,6 +9,11 @@ Read this before changing anything.
   explicitly told to re-capture.
 - Class strings, layout and copy come from
   `reference/<route>-<theme>-<width>.html`. Do not invent spacing values.
+- `src/data/panel-fixtures.json` is the SINGLE source for panel content:
+  chart series values, table rows and panel text for all 28 panels across the
+  six data routes. Do NOT re-extract chart geometry from the reference SVG --
+  the numeric values are already recovered there. Rendering traced SVG `d`
+  paths produces a picture of a chart, not a chart.
 - `src/data/*.json` fixtures hold extracted content. Use the strings exactly:
   text width drives layout, so substitutions prevent convergence.
 
@@ -39,10 +44,15 @@ Read this before changing anything.
 - Geist / Geist Mono via next/font/google as --font-sans / --font-mono.
 - globals.css tokens are verbatim from the target. Do not adjust or convert
   to oklch.
-- Badge colours come from the reference's own utility classes
-  (bg-green-100/text-green-700 and friends), NOT the semantic
-  success/warning tokens. Only "At risk" and "Committed" are coloured; New,
-  Working, On track and all region badges are default variants.
+- Badge colours come from the reference's own utility classes, NOT the
+  semantic success/warning tokens. Verified against the reference set:
+    green (bg-green-100/text-green-700 + dark variants): Committed,
+      Contract sent, Healthy
+    yellow (bg-yellow-100/text-yellow-700 + dark variants): At risk
+    destructive token (bg-destructive/10 text-destructive): Critical, Lost
+    uncoloured default variants: New, Working, On track, and every region
+      badge (NA-West, NA-East, EMEA, APAC)
+  Check a badge against the reference before colouring it.
 - Kanban column reordering uses native pointer events. No dnd library.
 
 ## React 19 gotcha already hit

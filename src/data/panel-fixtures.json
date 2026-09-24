@@ -1,0 +1,1481 @@
+{
+  "analytics": [
+    {
+      "title": "Traffic by channel",
+      "description": "Traffic break down across channels",
+      "headline": [
+        "Traffic by channel",
+        "Traffic break down across channels",
+        "83.7K",
+        "+9.6%",
+        "vs previous period",
+        "Organic search"
+      ],
+      "text": [
+        "Traffic by channel",
+        "Traffic break down across channels",
+        "83.7K",
+        "+9.6%",
+        "vs previous period",
+        "Organic search",
+        "29,300",
+        "35%",
+        "Paid search",
+        "16,700",
+        "20%",
+        "Social",
+        "12,600",
+        "15%",
+        "Direct",
+        "10,000",
+        "12%",
+        "Other",
+        "15,100",
+        "18%"
+      ]
+    },
+    {
+      "title": "Channel performance",
+      "description": "Clicks received vs leads converted, by channel",
+      "headline": [
+        "Channel performance",
+        "Clicks received vs leads converted, by channel",
+        "Leads",
+        "Clicks",
+        "Organic",
+        "Paid"
+      ],
+      "chart": {
+        "categories": [
+          "Organic",
+          "Paid",
+          "Socials",
+          "Direct",
+          "Other"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "bar",
+            "orientation": "vertical",
+            "pxPerUnit": 0.113,
+            "values": [
+              310,
+              428,
+              211,
+              202,
+              101
+            ]
+          },
+          {
+            "kind": "bar",
+            "orientation": "vertical",
+            "pxPerUnit": 0.113,
+            "values": [
+              1240,
+              1860,
+              960,
+              630,
+              420
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Marketing funnel",
+      "description": "Stage-by-stage conversion across your funnel",
+      "headline": [
+        "Marketing funnel",
+        "Stage-by-stage conversion across your funnel",
+        "42%",
+        "25%",
+        "17%",
+        "10%"
+      ],
+      "text": [
+        "Marketing funnel",
+        "Stage-by-stage conversion across your funnel",
+        "42%",
+        "25%",
+        "17%",
+        "10%",
+        "6%",
+        "Leads: 31,480 (42% of total)",
+        "Engaged: 18,902 (25% of total)",
+        "Subscribed: 12,640 (17% of total)",
+        "Qualified: 7,610 (10% of total)",
+        "Converted: 4,395 (6% of total)",
+        "Leads",
+        "Engaged",
+        "Subscribed",
+        "Qualified",
+        "Converted"
+      ]
+    },
+    {
+      "title": "Top landing pages",
+      "description": "Ranked by sessions this period",
+      "headline": [
+        "Top landing pages",
+        "Ranked by sessions this period",
+        "View all",
+        "Page",
+        "Sessions",
+        "Visitors"
+      ],
+      "table": {
+        "columns": [
+          "Page",
+          "Sessions",
+          "Visitors"
+        ],
+        "rows": [
+          [
+            "/pricing",
+            "512 29%",
+            "488 33%"
+          ],
+          [
+            "/templates",
+            "428 24%",
+            "357 24%"
+          ],
+          [
+            "/docs/getting-started",
+            "342 19%",
+            "221 15%"
+          ],
+          [
+            "/blog/shadcn-dashboards",
+            "296 17%",
+            "274 18%"
+          ],
+          [
+            "/components",
+            "214 12%",
+            "148 10%"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Leads over time",
+      "description": "Leads this period vs previous period",
+      "headline": [
+        "Leads over time",
+        "Leads this period vs previous period",
+        "2847",
+        "+12.5%",
+        "vs previous period",
+        "Jul 2"
+      ],
+      "chart": {
+        "categories": [
+          "Jul 2",
+          "Jul 6",
+          "Jul 10",
+          "Jul 14",
+          "Jul 18",
+          "Jul 22",
+          "Jul 27",
+          "Aug 1"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "area",
+            "pxBaseline": 192.0,
+            "pxPerUnit": 1.6,
+            "values": [
+              63,
+              65,
+              67,
+              66,
+              70,
+              71,
+              75,
+              76,
+              75,
+              72,
+              74,
+              72,
+              70,
+              71,
+              74,
+              75,
+              76,
+              80,
+              80,
+              80,
+              83,
+              86,
+              91,
+              89,
+              92,
+              88,
+              93,
+              92,
+              92,
+              92,
+              91,
+              90
+            ]
+          },
+          {
+            "kind": "area",
+            "pxBaseline": 192.0,
+            "pxPerUnit": 1.6,
+            "values": [
+              70,
+              71,
+              75,
+              76,
+              77,
+              80,
+              83,
+              83,
+              83,
+              80,
+              82,
+              80,
+              80,
+              80,
+              81,
+              86,
+              88,
+              89,
+              91,
+              91,
+              94,
+              98,
+              100,
+              103,
+              104,
+              101,
+              104,
+              105,
+              104,
+              102,
+              104,
+              102
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Attribution breakdown",
+      "description": "Revenue credited by first touch vs last touch",
+      "headline": [
+        "Attribution breakdown",
+        "Revenue credited by first touch vs last touch",
+        "First touch",
+        "Last touch",
+        "Organic",
+        "Paid"
+      ],
+      "chart": {
+        "categories": [
+          "Organic",
+          "Paid",
+          "Socials",
+          "Direct",
+          "Other"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "bar",
+            "orientation": "horizontal",
+            "pxPerUnit": 0.58,
+            "values": [
+              684,
+              612,
+              395,
+              428,
+              361
+            ]
+          },
+          {
+            "kind": "bar",
+            "orientation": "horizontal",
+            "pxPerUnit": 0.58,
+            "values": [
+              523,
+              489,
+              214,
+              796,
+              458
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "title": "Campaign performance",
+      "description": "Top 5 campaigns by leads generated",
+      "headline": [
+        "Campaign performance",
+        "Top 5 campaigns by leads generated",
+        "View all",
+        "Campaign",
+        "Channel",
+        "Spend"
+      ],
+      "table": {
+        "columns": [
+          "Campaign",
+          "Channel",
+          "Spend",
+          "Clicks",
+          "Leads",
+          "Cost per lead"
+        ],
+        "rows": [
+          [
+            "Summer launch \u2013 Search",
+            "Google Ads",
+            "$9,800",
+            "6,200",
+            "310 +18%",
+            "$31.61"
+          ],
+          [
+            "Retargeting \u2013 Meta",
+            "Meta",
+            "$7,400",
+            "5,900",
+            "265 +9%",
+            "$27.92"
+          ],
+          [
+            "Brand search",
+            "Google Ads",
+            "$6,200",
+            "4,800",
+            "248 0%",
+            "$25.00"
+          ],
+          [
+            "Newsletter reactivation",
+            "Email",
+            "$1,900",
+            "2,700",
+            "152 +24%",
+            "$12.50"
+          ],
+          [
+            "UGC creators \u2013 TikTok",
+            "TikTok",
+            "$4,200",
+            "3,400",
+            "96 -16%",
+            "$43.75"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Paid media allocation",
+      "description": "Spend distribution across your paid channels",
+      "headline": [
+        "Paid media allocation",
+        "Spend distribution across your paid channels",
+        "$61,900",
+        "Paid media",
+        "Google ads",
+        "$21,700"
+      ],
+      "chart": {
+        "categories": [],
+        "isPie": true,
+        "isRadial": false,
+        "series": []
+      }
+    },
+    {
+      "title": "Engagement by day & hour",
+      "description": "Open rate by send time",
+      "headline": [
+        "Engagement by day & hour",
+        "Open rate by send time",
+        "Least value",
+        "Max value",
+        "12am",
+        "4am"
+      ],
+      "table": {
+        "columns": [
+          "Hour",
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun"
+        ],
+        "rows": [
+          [
+            "12am",
+            "9%",
+            "9%",
+            "9%",
+            "9%",
+            "10%",
+            "12%",
+            "11%"
+          ],
+          [
+            "4am",
+            "8%",
+            "8%",
+            "8%",
+            "8%",
+            "9%",
+            "9%",
+            "9%"
+          ],
+          [
+            "8am",
+            "44%",
+            "53%",
+            "56%",
+            "50%",
+            "36%",
+            "14%",
+            "12%"
+          ],
+          [
+            "12pm",
+            "36%",
+            "42%",
+            "43%",
+            "39%",
+            "33%",
+            "22%",
+            "20%"
+          ],
+          [
+            "4pm",
+            "42%",
+            "47%",
+            "46%",
+            "43%",
+            "29%",
+            "16%",
+            "16%"
+          ],
+          [
+            "8pm",
+            "24%",
+            "28%",
+            "27%",
+            "25%",
+            "21%",
+            "17%",
+            "16%"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Growth simulator",
+      "description": "Model monthly spend against projected pipeline",
+      "headline": [
+        "Growth simulator",
+        "Model monthly spend against projected pipeline",
+        "Monthly spend",
+        "Cost per lead",
+        "Lead to customer rate",
+        "Projected leads"
+      ],
+      "text": [
+        "Growth simulator",
+        "Model monthly spend against projected pipeline",
+        "Monthly spend",
+        "Cost per lead",
+        "Lead to customer rate",
+        "Projected leads",
+        "3,389",
+        "Projected customers",
+        "115",
+        "Projected revenue",
+        "$483,000"
+      ]
+    },
+    {
+      "title": "Cost per acquisition",
+      "description": "Average cost per lead daily",
+      "headline": [
+        "Cost per acquisition",
+        "Average cost per lead daily",
+        "$29.61",
+        "+3.7%",
+        "vs previous period",
+        "Jul 2"
+      ],
+      "chart": {
+        "categories": [
+          "Jul 2",
+          "Jul 6",
+          "Jul 10",
+          "Jul 14",
+          "Jul 18",
+          "Jul 22",
+          "Jul 27",
+          "Aug 1"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "area",
+            "pxPerUnit": 3.84556,
+            "scaleNote": "absolute scale pinned to the card headline mean of $29.61; shape is exact, unit calibration is inferred",
+            "values": [
+              19.26,
+              21.33,
+              22.0,
+              23.3,
+              23.83,
+              26.43,
+              24.22,
+              23.64,
+              23.78,
+              23.45,
+              23.5,
+              23.35,
+              23.25,
+              24.8,
+              25.9,
+              28.26,
+              28.7,
+              30.0,
+              32.07,
+              34.62,
+              35.15,
+              37.02,
+              37.55,
+              36.21,
+              34.95,
+              36.78,
+              36.64,
+              35.39,
+              36.59,
+              36.06,
+              39.19,
+              40.3
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "customers": [
+    {
+      "title": "Average customer health score",
+      "description": "Avg health score across active customers",
+      "headline": [
+        "Average customer health score",
+        "Avg health score across active customers",
+        "86",
+        "Avg health score",
+        "Healthy score",
+        "80-100"
+      ],
+      "chart": {
+        "categories": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "isPie": false,
+        "isRadial": true,
+        "series": []
+      }
+    },
+    {
+      "title": "Sales rep leaderboard",
+      "description": "Quota attainment this quarter",
+      "headline": [
+        "Sales rep leaderboard",
+        "Quota attainment this quarter",
+        "1",
+        "ND",
+        "Noah Mark Davis",
+        "x"
+      ],
+      "text": [
+        "Sales rep leaderboard",
+        "Quota attainment this quarter",
+        "1",
+        "ND",
+        "Noah Mark Davis",
+        "x",
+        "$410K/$250K",
+        "2",
+        "EJ",
+        "Ethan Parker Jenson",
+        "x",
+        "$220K/$200K",
+        "3",
+        "SB",
+        "Sophia Brown",
+        "x",
+        "$230K/$230K",
+        "4",
+        "LS",
+        "Liam Smith",
+        "x",
+        "$160K/$210K",
+        "5",
+        "OJ",
+        "Olivia Johnson",
+        "x",
+        "$135K/$220K"
+      ]
+    }
+  ],
+  "deals": [
+    {
+      "title": "Open deals",
+      "description": "Deals in flight across the team",
+      "headline": [
+        "Open deals",
+        "Deals in flight across the team",
+        "View all",
+        "Deal",
+        "Owner",
+        "Stage"
+      ],
+      "table": {
+        "columns": [
+          "Deal",
+          "Owner",
+          "Stage",
+          "Value",
+          "Close date"
+        ],
+        "rows": [
+          [
+            "Acme Corp \u2013 Team plan",
+            "Sarah Chen",
+            "Negotiation",
+            "$12,400",
+            "Aug 15, 2026"
+          ],
+          [
+            "Northstar Labs",
+            "Marcus Webb",
+            "Proposal",
+            "$8,900",
+            "Aug 22, 2026"
+          ],
+          [
+            "Fieldstone Group",
+            "Priya Nair",
+            "Qualified",
+            "$5,800",
+            "Sep 3, 2026"
+          ],
+          [
+            "Brightline Studio",
+            "Sarah Chen",
+            "Contract sent",
+            "$6,200",
+            "Aug 8, 2026"
+          ],
+          [
+            "Meridian Health",
+            "Priya Nair",
+            "Contract sent",
+            "$3,100",
+            "Aug 11, 2026"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Deal velocity",
+      "description": "Avg days in stage by segment",
+      "headline": [
+        "Deal velocity",
+        "Avg days in stage by segment",
+        "Faster",
+        "Slower",
+        "SMB new",
+        "SMB exp"
+      ],
+      "table": {
+        "columns": [
+          "Segment",
+          "Lead",
+          "Qualified",
+          "Proposal",
+          "Negotiation"
+        ],
+        "rows": [
+          [
+            "SMB new",
+            "10 days",
+            "14 days",
+            "17 days",
+            "13 days"
+          ],
+          [
+            "SMB exp",
+            "4 days",
+            "10 days",
+            "11 days",
+            "7 days"
+          ],
+          [
+            "MM new",
+            "13 days",
+            "20 days",
+            "27 days",
+            "19 days"
+          ],
+          [
+            "MM exp",
+            "7 days",
+            "15 days",
+            "18 days",
+            "14 days"
+          ],
+          [
+            "ENT new",
+            "17 days",
+            "30 days",
+            "41 days",
+            "27 days"
+          ],
+          [
+            "ENT exp",
+            "11 days",
+            "21 days",
+            "27 days",
+            "19 days"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Win rate and conversion between stages",
+      "description": "Closed-won share of recent deals",
+      "headline": [
+        "Win rate and conversion between stages",
+        "Closed-won share of recent deals",
+        "32%",
+        "+2.1%",
+        "vs previous period",
+        "Lead \u2192 Qual"
+      ],
+      "chart": {
+        "categories": [
+          "Lead \u2192 Qual",
+          "Qual \u2192 Prop",
+          "Prop \u2192 Neg",
+          "Neg \u2192 Won"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "bar",
+            "orientation": "horizontal",
+            "pxPerUnit": 4.28,
+            "values": [
+              44,
+              72,
+              78,
+              57
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "leads": [
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "New leads",
+        "2,847",
+        "+4.2%",
+        "from last month",
+        "MQLs",
+        "1,720"
+      ],
+      "text": [
+        "New leads",
+        "2,847",
+        "+4.2%",
+        "from last month",
+        "MQLs",
+        "1,720",
+        "+6.0%",
+        "from last month",
+        "Cost per lead",
+        "$29.61",
+        "+12.5%",
+        "from last month",
+        "Lead conversion rate",
+        "3.4%",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "New leads",
+        "2,847",
+        "+4.2%",
+        "from last month"
+      ],
+      "text": [
+        "New leads",
+        "2,847",
+        "+4.2%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "MQLs",
+        "1,720",
+        "+6.0%",
+        "from last month"
+      ],
+      "text": [
+        "MQLs",
+        "1,720",
+        "+6.0%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Cost per lead",
+        "$29.61",
+        "+12.5%",
+        "from last month"
+      ],
+      "text": [
+        "Cost per lead",
+        "$29.61",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Lead conversion rate",
+        "3.4%",
+        "+12.5%",
+        "from last month"
+      ],
+      "text": [
+        "Lead conversion rate",
+        "3.4%",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": "Leads over time",
+      "description": "Leads this period vs previous period",
+      "headline": [
+        "Leads over time",
+        "Leads this period vs previous period",
+        "2847",
+        "+12.5%",
+        "vs previous period",
+        "Jul 2"
+      ],
+      "chart": {
+        "categories": [
+          "Jul 2",
+          "Jul 6",
+          "Jul 10",
+          "Jul 14",
+          "Jul 18",
+          "Jul 22",
+          "Jul 27",
+          "Aug 1"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "area",
+            "pxBaseline": 192.0,
+            "pxPerUnit": 1.6,
+            "values": [
+              63,
+              65,
+              67,
+              66,
+              70,
+              71,
+              75,
+              76,
+              75,
+              72,
+              74,
+              72,
+              70,
+              71,
+              74,
+              75,
+              76,
+              80,
+              80,
+              80,
+              83,
+              86,
+              91,
+              89,
+              92,
+              88,
+              93,
+              92,
+              92,
+              92,
+              91,
+              90
+            ]
+          },
+          {
+            "kind": "area",
+            "pxBaseline": 192.0,
+            "pxPerUnit": 1.6,
+            "values": [
+              70,
+              71,
+              75,
+              76,
+              77,
+              80,
+              83,
+              83,
+              83,
+              80,
+              82,
+              80,
+              80,
+              80,
+              81,
+              86,
+              88,
+              89,
+              91,
+              91,
+              94,
+              98,
+              100,
+              103,
+              104,
+              101,
+              104,
+              105,
+              104,
+              102,
+              104,
+              102
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Lead-to-customer funnel",
+      "description": "Lead to closed-won conversion, this quarter",
+      "headline": [
+        "Lead-to-customer funnel",
+        "Lead to closed-won conversion, this quarter",
+        "Leads",
+        "2,847",
+        "100%",
+        "MQLs"
+      ],
+      "chart": {
+        "categories": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "isPie": false,
+        "isRadial": true,
+        "series": []
+      }
+    },
+    {
+      "title": "Leads by region",
+      "description": "Where new leads come from and what they are worth",
+      "headline": [
+        "Leads by region",
+        "Where new leads come from and what they are worth",
+        "List",
+        "Map",
+        "Country",
+        "Leads"
+      ],
+      "table": {
+        "columns": [
+          "Country",
+          "Leads",
+          "Pipeline value"
+        ],
+        "rows": [
+          [
+            "United States",
+            "512 29%",
+            "$1,340,000"
+          ],
+          [
+            "Germany",
+            "428 24%",
+            "$920,000"
+          ],
+          [
+            "United Kingdom",
+            "342 19%",
+            "$835,000"
+          ],
+          [
+            "Brazil",
+            "296 17%",
+            "$370,000"
+          ],
+          [
+            "Australia",
+            "214 12%",
+            "$405,000"
+          ]
+        ]
+      }
+    }
+  ],
+  "root": [
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Marketing spend",
+        "$84,300",
+        "+8.2%",
+        "from last month",
+        "Total revenue",
+        "$1,250.00"
+      ],
+      "text": [
+        "Marketing spend",
+        "$84,300",
+        "+8.2%",
+        "from last month",
+        "Total revenue",
+        "$1,250.00",
+        "+12.5%",
+        "from last month",
+        "Cost per lead",
+        "$29.61",
+        "+12.5%",
+        "from last month",
+        "Lead conversion rate",
+        "3.4%",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Marketing spend",
+        "$84,300",
+        "+8.2%",
+        "from last month"
+      ],
+      "text": [
+        "Marketing spend",
+        "$84,300",
+        "+8.2%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Total revenue",
+        "$1,250.00",
+        "+12.5%",
+        "from last month"
+      ],
+      "text": [
+        "Total revenue",
+        "$1,250.00",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Cost per lead",
+        "$29.61",
+        "+12.5%",
+        "from last month"
+      ],
+      "text": [
+        "Cost per lead",
+        "$29.61",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": null,
+      "description": null,
+      "headline": [
+        "Lead conversion rate",
+        "3.4%",
+        "+12.5%",
+        "from last month"
+      ],
+      "text": [
+        "Lead conversion rate",
+        "3.4%",
+        "+12.5%",
+        "from last month"
+      ]
+    },
+    {
+      "title": "Leads over time",
+      "description": "Leads this period vs previous period",
+      "headline": [
+        "Leads over time",
+        "Leads this period vs previous period",
+        "2847",
+        "+12.5%",
+        "vs previous period",
+        "Jul 2"
+      ],
+      "chart": {
+        "categories": [
+          "Jul 2",
+          "Jul 6",
+          "Jul 10",
+          "Jul 14",
+          "Jul 18",
+          "Jul 22",
+          "Jul 27",
+          "Aug 1"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "area",
+            "pxBaseline": 192.0,
+            "pxPerUnit": 1.6,
+            "values": [
+              63,
+              65,
+              67,
+              66,
+              70,
+              71,
+              75,
+              76,
+              75,
+              72,
+              74,
+              72,
+              70,
+              71,
+              74,
+              75,
+              76,
+              80,
+              80,
+              80,
+              83,
+              86,
+              91,
+              89,
+              92,
+              88,
+              93,
+              92,
+              92,
+              92,
+              91,
+              90
+            ]
+          },
+          {
+            "kind": "area",
+            "pxBaseline": 192.0,
+            "pxPerUnit": 1.6,
+            "values": [
+              70,
+              71,
+              75,
+              76,
+              77,
+              80,
+              83,
+              83,
+              83,
+              80,
+              82,
+              80,
+              80,
+              80,
+              81,
+              86,
+              88,
+              89,
+              91,
+              91,
+              94,
+              98,
+              100,
+              103,
+              104,
+              101,
+              104,
+              105,
+              104,
+              102,
+              104,
+              102
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "Attribution breakdown",
+      "description": "Revenue credited by first touch vs last touch",
+      "headline": [
+        "Attribution breakdown",
+        "Revenue credited by first touch vs last touch",
+        "First touch",
+        "Last touch",
+        "Organic",
+        "Paid"
+      ],
+      "chart": {
+        "categories": [
+          "Organic",
+          "Paid",
+          "Socials",
+          "Direct",
+          "Other"
+        ],
+        "isPie": false,
+        "isRadial": false,
+        "series": [
+          {
+            "kind": "bar",
+            "orientation": "horizontal",
+            "pxPerUnit": 0.58,
+            "values": [
+              684,
+              612,
+              395,
+              428,
+              361
+            ]
+          },
+          {
+            "kind": "bar",
+            "orientation": "horizontal",
+            "pxPerUnit": 0.58,
+            "values": [
+              523,
+              489,
+              214,
+              796,
+              458
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "title": "AI insights",
+      "description": "Alerts and opportunities across your funnel",
+      "headline": [
+        "AI insights",
+        "Alerts and opportunities across your funnel",
+        "Win rate up 4 pts",
+        "32% this quarter, driven by faster Proposal-stage exits.",
+        "Cost per lead climbing",
+        "CPL rose 12.5% while spend grew 8.2%. Socials is the driver."
+      ],
+      "text": [
+        "AI insights",
+        "Alerts and opportunities across your funnel",
+        "Win rate up 4 pts",
+        "32% this quarter, driven by faster Proposal-stage exits.",
+        "Cost per lead climbing",
+        "CPL rose 12.5% while spend grew 8.2%. Socials is the driver.",
+        "Q3 forecast gap",
+        "Forecast $1.38M against the $1.5M target, an 8% gap.",
+        "Organic outperforming paid",
+        "Organic drives the most first-touch revenue this month."
+      ]
+    },
+    {
+      "title": "Revenue vs target",
+      "description": "Q3 target, quarter to date",
+      "headline": [
+        "Revenue vs target",
+        "Q3 target, quarter to date",
+        "Closed",
+        "$412,000",
+        "Target",
+        "$1,500,000"
+      ],
+      "text": [
+        "Revenue vs target",
+        "Q3 target, quarter to date",
+        "Closed",
+        "$412,000",
+        "Target",
+        "$1,500,000",
+        "Forecast",
+        "$1,380,000"
+      ]
+    },
+    {
+      "title": "Marketing goals",
+      "description": "Month-to-date attainment against monthly targets",
+      "headline": [
+        "Marketing goals",
+        "Month-to-date attainment against monthly targets",
+        "Pipeline created",
+        "$12,847 / $13,000",
+        "x",
+        "Leads generated"
+      ],
+      "text": [
+        "Marketing goals",
+        "Month-to-date attainment against monthly targets",
+        "Pipeline created",
+        "$12,847 / $13,000",
+        "x",
+        "Leads generated",
+        "2,830 / 3,000",
+        "x",
+        "New customers",
+        "459 / 600",
+        "x"
+      ]
+    },
+    {
+      "title": "Pipeline by stage",
+      "description": "Open pipeline across all deals",
+      "headline": [
+        "Pipeline by stage",
+        "Open pipeline across all deals",
+        "38%",
+        "24%",
+        "18%",
+        "12%"
+      ],
+      "text": [
+        "Pipeline by stage",
+        "Open pipeline across all deals",
+        "38%",
+        "24%",
+        "18%",
+        "12%",
+        "8%",
+        "Lead: $763K (38% of total)",
+        "Qualified: $482K (24% of total)",
+        "Proposal: $361K (18% of total)",
+        "Negotiation: $241K (12% of total)",
+        "Closed won: $161K (8% of total)",
+        "Lead",
+        "Qualified",
+        "Proposal",
+        "Negotiation",
+        "Closed won"
+      ]
+    },
+    {
+      "title": "Sales rep leaderboard",
+      "description": "Quota attainment this quarter",
+      "headline": [
+        "Sales rep leaderboard",
+        "Quota attainment this quarter",
+        "1",
+        "Noah Mark Davis",
+        "x",
+        "$410K/$250K"
+      ],
+      "text": [
+        "Sales rep leaderboard",
+        "Quota attainment this quarter",
+        "1",
+        "Noah Mark Davis",
+        "x",
+        "$410K/$250K",
+        "2",
+        "Ethan Parker Jenson",
+        "x",
+        "$220K/$200K",
+        "3",
+        "Sophia Brown",
+        "x",
+        "$230K/$230K",
+        "4",
+        "Liam Smith",
+        "x",
+        "$160K/$210K",
+        "5",
+        "Olivia Johnson",
+        "x",
+        "$135K/$220K"
+      ]
+    }
+  ],
+  "settings": []
+}

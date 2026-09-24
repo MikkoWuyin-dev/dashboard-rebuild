@@ -45,3 +45,8 @@ next-env.d.ts
 # diff-harness run outputs
 /current/
 /diffs/
+
+# agent scratch
+.tmp/
+.dev-server.log
+.*.cjs
