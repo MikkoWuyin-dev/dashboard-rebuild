@@ -246,7 +246,7 @@ async function stitchInnerScroll(page, maskCount) {
 
 function maskFromCount(page, count) {
   if (!count) return undefined;
-  return Array.from({ length: count }, () => page.locator('[data-slot="avatar"]'));
+  return Array.from({ length: count }, () => page.locator('[data-slot="avatar"], [data-slot="profile-card-avatar"]'));
 }
 
 // Capture every route x theme x viewport combination of one site into outDir.
@@ -298,7 +298,7 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console,
       // Mask every avatar wrapper with the default mask colour: the wrapper
       // [data-slot=avatar] exists on BOTH sides (reference img-only masking
       // left an asymmetry — our initials fallbacks showed as diffs).
-      const maskCount = await page.locator('[data-slot="avatar"]').count();
+      const maskCount = await page.locator('[data-slot="avatar"], [data-slot="profile-card-avatar"]').count();
 
       let png = pngPath(outDir, route, theme, vp);
       let buffer;
