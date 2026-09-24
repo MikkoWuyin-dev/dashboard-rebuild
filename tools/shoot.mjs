@@ -244,10 +244,9 @@ async function stitchInnerScroll(page, maskCount) {
   return { buffer: Buffer.from(dataUrl.split(",")[1], "base64"), plan, dims };
 }
 
-// Rebuild the mask locator list (locators can't cross the Node/page boundary).
 function maskFromCount(page, count) {
   if (!count) return undefined;
-  return Array.from({ length: count }, () => page.locator('[data-slot="avatar-image"]'));
+  return Array.from({ length: count }, () => page.locator('[data-slot="avatar"]'));
 }
 
 // Capture every route x theme x viewport combination of one site into outDir.
@@ -296,10 +295,10 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console,
       await page.addStyleTag({ content: KILL_MOTION_CSS });
       await page.waitForTimeout(250);
 
-      // Mask every avatar image with the default mask colour: our avatars are
-      // placeholders and can never match the target's photos, so blanking both
-      // sides cancels them out instead of leaving permanent noise.
-      const maskCount = await page.locator('[data-slot="avatar-image"]').count();
+      // Mask every avatar wrapper with the default mask colour: the wrapper
+      // [data-slot=avatar] exists on BOTH sides (reference img-only masking
+      // left an asymmetry — our initials fallbacks showed as diffs).
+      const maskCount = await page.locator('[data-slot="avatar"]').count();
 
       let png = pngPath(outDir, route, theme, vp);
       let buffer;
