@@ -99,6 +99,66 @@
       "health": "Healthy",
       "healthVariant": "success",
       "created": "Jan 30, 2026"
+    },
+    {
+      "name": "Harbor & Vine",
+      "email": "owners@harborvine.com",
+      "plan": "Free",
+      "planVariant": "outline",
+      "mrr": "$0.00",
+      "health": "At risk",
+      "healthVariant": "warning",
+      "created": "Jun 11, 2026"
+    },
+    {
+      "name": "Cobalt Systems",
+      "email": "finance@cobaltsys.com",
+      "plan": "Enterprise",
+      "planVariant": "outline",
+      "mrr": "$2,075.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Oct 21, 2025"
+    },
+    {
+      "name": "Willow Works",
+      "email": "studio@willowworks.co",
+      "plan": "Pro",
+      "planVariant": "outline",
+      "mrr": "$49.00",
+      "health": "Critical",
+      "healthVariant": "destructive",
+      "created": "Sep 8, 2025"
+    },
+    {
+      "name": "Atlas Robotics",
+      "email": "ops@atlasrobotics.ai",
+      "plan": "Enterprise",
+      "planVariant": "outline",
+      "mrr": "$4,180.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Feb 27, 2026"
+    },
+    {
+      "name": "Juniper Loft",
+      "email": "stay@juniperloft.com",
+      "plan": "Free",
+      "planVariant": "outline",
+      "mrr": "$0.00",
+      "health": "At risk",
+      "healthVariant": "warning",
+      "created": "Jul 2, 2026"
+    },
+    {
+      "name": "Meridian Legal",
+      "email": "admin@meridianlegal.com",
+      "plan": "Team",
+      "planVariant": "outline",
+      "mrr": "$890.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Mar 3, 2026"
     }
   ],
   "leaderboard": [
