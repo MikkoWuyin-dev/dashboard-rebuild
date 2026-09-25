@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import {
+  ArrowUpDown,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
@@ -52,6 +53,34 @@ const COLUMNS = [
   "Actions",
 ] as const
 
+// The reference pins three columns inline; the rest are auto. Without these the
+// grip and actions columns render narrow, shifting every other column 12-18px
+// left and mismatching every cell in all ten rows.
+// Only Name and MRR are sortable in the reference; the rest are plain text.
+// Their headers are ghost buttons, which is also why those two columns render
+// wider than a bare label.
+const SORTABLE: Record<number, { key: "name" | "mrr"; align: "left" | "right" }> = {
+  2: { key: "name", align: "left" },
+  5: { key: "mrr", align: "right" },
+}
+
+const money = (v: string) => Number(v.replace(/[^0-9.]/g, ""))
+
+const EDGE_PAD = (i: number, n: number) =>
+  i === 0 ? "pl-4" : i === n - 1 ? "pr-4" : undefined
+
+const COL_WIDTHS: (string | undefined)[] = [
+  "1%",
+  "1%",
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  undefined,
+  "56px",
+]
+
 // Health maps to the reference's own badge variants; Plan is always outline.
 // Verified against reference/customers-light-1440.html.
 const healthVariant: Record<string, "success" | "warning" | "destructive"> = {
@@ -64,15 +93,36 @@ export function CustomersTable() {
   const rows = fixture.table as Row[]
   const [selected, setSelected] = React.useState<Set<string>>(new Set())
   const [query, setQuery] = React.useState("")
+  const [sort, setSort] = React.useState<{
+    key: "name" | "mrr"
+    dir: "asc" | "desc"
+  } | null>(null)
 
   const visible = React.useMemo(() => {
     const q = query.trim().toLowerCase()
-    if (!q) return rows
-    return rows.filter(
-      (r) =>
-        r.name.toLowerCase().includes(q) || r.email.toLowerCase().includes(q),
+    const filtered = q
+      ? rows.filter(
+          (r) =>
+            r.name.toLowerCase().includes(q) ||
+            r.email.toLowerCase().includes(q),
+        )
+      : rows
+    if (!sort) return filtered
+    const dir = sort.dir === "asc" ? 1 : -1
+    return [...filtered].sort((a, b) =>
+      sort.key === "mrr"
+        ? (money(a.mrr) - money(b.mrr)) * dir
+        : a.name.localeCompare(b.name) * dir,
     )
-  }, [rows, query])
+  }, [rows, query, sort])
+
+  function toggleSort(key: "name" | "mrr") {
+    setSort((prev) =>
+      prev?.key === key
+        ? { key, dir: prev.dir === "asc" ? "desc" : "asc" }
+        : { key, dir: "asc" },
+    )
+  }
 
   const allVisibleSelected =
     visible.length > 0 && visible.every((r) => selected.has(r.name))
@@ -138,7 +188,11 @@ export function CustomersTable() {
           <TableHeader>
             <TableRow>
               {COLUMNS.map((col, i) => (
-                <TableHead key={i}>
+                <TableHead
+                  key={i}
+                  style={{ width: COL_WIDTHS[i] }}
+                  className={EDGE_PAD(i, COLUMNS.length)}
+                >
                   {col === "Reorder" || col === "Actions" ? (
                     <span className="sr-only">{col}</span>
                   ) : col === "" ? (
@@ -147,6 +201,21 @@ export function CustomersTable() {
                       onCheckedChange={toggleAll}
                       aria-label="Select all customers"
                     />
+                  ) : SORTABLE[i] ? (
+                    <div
+                      data-align={SORTABLE[i].align}
+                      className="data-[align=right]:text-right"
+                    >
+                      <Button
+                        variant="ghost"
+                        data-align={SORTABLE[i].align}
+                        onClick={() => toggleSort(SORTABLE[i].key)}
+                        className="h-8 gap-1.5 px-2 data-[align=left]:-translate-x-2 data-[align=right]:translate-x-2"
+                      >
+                        {col}
+                        <ArrowUpDown />
+                      </Button>
+                    </div>
                   ) : (
                     col
                   )}
@@ -157,7 +226,7 @@ export function CustomersTable() {
           <TableBody>
             {visible.map((row) => (
               <TableRow key={row.name} data-state={selected.has(row.name) ? "selected" : undefined}>
-                <TableCell>
+                <TableCell className="pl-4">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -189,7 +258,7 @@ export function CustomersTable() {
                   </Badge>
                 </TableCell>
                 <TableCell>{row.created}</TableCell>
-                <TableCell>
+                <TableCell className="pr-4">
                   <div className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger
