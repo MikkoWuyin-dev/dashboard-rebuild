@@ -1,0 +1,174 @@
+{
+  "traffic": {
+    "total": "83.7K",
+    "delta": "+9.6%",
+    "note": "vs previous period",
+    "channels": [
+      {
+        "label": "Organic search",
+        "value": 29300,
+        "count": "29,300",
+        "share": "35%"
+      },
+      {
+        "label": "Paid search",
+        "value": 16700,
+        "count": "16,700",
+        "share": "20%"
+      },
+      {
+        "label": "Social",
+        "value": 12600,
+        "count": "12,600",
+        "share": "15%"
+      },
+      {
+        "label": "Direct",
+        "value": 10000,
+        "count": "10,000",
+        "share": "12%"
+      },
+      {
+        "label": "Other",
+        "value": 15100,
+        "count": "15,100",
+        "share": "18%"
+      }
+    ]
+  },
+  "channelPerformance": {
+    "domain": [
+      0,
+      2000
+    ],
+    "rows": [
+      {
+        "channel": "Organic",
+        "leads": 310,
+        "clicks": 1240
+      },
+      {
+        "channel": "Paid",
+        "leads": 428,
+        "clicks": 1860
+      },
+      {
+        "channel": "Socials",
+        "leads": 211,
+        "clicks": 960
+      },
+      {
+        "channel": "Direct",
+        "leads": 202,
+        "clicks": 630
+      },
+      {
+        "channel": "Other",
+        "leads": 101,
+        "clicks": 420
+      }
+    ]
+  },
+  "funnel": [
+    {
+      "label": "Leads",
+      "count": 31480,
+      "display": "31,480",
+      "share": "42%"
+    },
+    {
+      "label": "Engaged",
+      "count": 18902,
+      "display": "18,902",
+      "share": "25%"
+    },
+    {
+      "label": "Subscribed",
+      "count": 12640,
+      "display": "12,640",
+      "share": "17%"
+    },
+    {
+      "label": "Qualified",
+      "count": 7610,
+      "display": "7,610",
+      "share": "10%"
+    },
+    {
+      "label": "Converted",
+      "count": 4395,
+      "display": "4,395",
+      "share": "6%"
+    }
+  ],
+  "landingPages": [
+    {
+      "page": "/pricing",
+      "sessions": "512",
+      "sessionsShare": "29%",
+      "visitors": "488",
+      "visitorsShare": "33%"
+    },
+    {
+      "page": "/templates",
+      "sessions": "428",
+      "sessionsShare": "24%",
+      "visitors": "357",
+      "visitorsShare": "24%"
+    },
+    {
+      "page": "/docs/getting-started",
+      "sessions": "342",
+      "sessionsShare": "19%",
+      "visitors": "221",
+      "visitorsShare": "15%"
+    },
+    {
+      "page": "/blog/shadcn-dashboards",
+      "sessions": "296",
+      "sessionsShare": "17%",
+      "visitors": "274",
+      "visitorsShare": "18%"
+    },
+    {
+      "page": "/components",
+      "sessions": "214",
+      "sessionsShare": "12%",
+      "visitors": "148",
+      "visitorsShare": "10%"
+    }
+  ],
+  "attribution": {
+    "domain": [
+      0,
+      800
+    ],
+    "rows": [
+      {
+        "channel": "Organic",
+        "firstTouch": 684,
+        "lastTouch": 523
+      },
+      {
+        "channel": "Paid",
+        "firstTouch": 612,
+        "lastTouch": 489
+      },
+      {
+        "channel": "Socials",
+        "firstTouch": 395,
+        "lastTouch": 214
+      },
+      {
+        "channel": "Direct",
+        "firstTouch": 428,
+        "lastTouch": 796
+      },
+      {
+        "channel": "Other",
+        "firstTouch": 361,
+        "lastTouch": 458
+      }
+    ]
+  }
+}
