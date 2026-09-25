@@ -27,7 +27,9 @@ const [xMin, xMax] = fixture.attribution.domain
 export function AttributionChart() {
   return (
     <Card className="h-90">
-      <CardHeader>
+      {/* Below sm the reference drops the header grid for a plain column, so
+          the description runs full width and the legend sits under it. */}
+      <CardHeader className="max-sm:flex max-sm:flex-col">
         <CardTitle>Attribution breakdown</CardTitle>
         <CardDescription>
           Revenue credited by first touch vs last touch
