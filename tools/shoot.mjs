@@ -295,6 +295,27 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console,
       await page.addStyleTag({ content: KILL_MOTION_CSS });
       await page.waitForTimeout(250);
 
+      // recharts animates in JavaScript (react-smooth), which the CSS above
+      // cannot stop, so a settled aria-busy does not mean a settled chart.
+      // Wait for every chart shape to stop moving instead of guessing a
+      // duration: three consecutive identical geometry samples, 150ms apart.
+      await page.waitForFunction(
+        () => {
+          const shapes = document.querySelectorAll(
+            "path.recharts-sector, path.recharts-rectangle, path.recharts-curve, path.recharts-radial-bar-sector"
+          );
+          const w = /** @type {any} */ (window);
+          if (!shapes.length) return true;
+          let sig = "";
+          for (const s of shapes) sig += s.getAttribute("d") || "";
+          w.__shotStable = w.__shotSig === sig ? (w.__shotStable || 0) + 1 : 0;
+          w.__shotSig = sig;
+          return w.__shotStable >= 2;
+        },
+        null,
+        { timeout: SETTLE_TIMEOUT_MS, polling: 150 }
+      );
+
       // Mask every avatar wrapper with the default mask colour: the wrapper
       // [data-slot=avatar] exists on BOTH sides (reference img-only masking
       // left an asymmetry — our initials fallbacks showed as diffs).
