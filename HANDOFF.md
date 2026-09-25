@@ -6,27 +6,29 @@ current state and what to do next.
 
 ## Where the build stands
 
-All seven routes are built and diffing. Last full run, 42/42 pairs compared,
-**mean 0.26%**, worst pair 1.13%:
+All seven routes are built, and every control on them is wired. Last full run,
+42/42 pairs compared, **mean 0.17%**, worst pair 0.87%, 22 of 42 under 0.10%:
 
 | route       | best | worst | worst pair           |
 |-------------|------|-------|----------------------|
 | /settings   | 0.01 | 0.15  | settings-dark-1440   |
+| /leads      | 0.01 | 0.06  | leads-light-390      |
 | /campaigns  | 0.02 | 0.07  | campaigns-dark-390   |
-| /           | 0.06 | 0.33  | root-light-390       |
-| /deals      | 0.11 | 0.54  | deals-dark-390       |
-| /analytics  | 0.10 | 0.42  | analytics-light-390  |
+| /           | 0.06 | 0.34  | root-light-390       |
+| /deals      | 0.11 | 0.53  | deals-dark-390       |
+| /analytics  | 0.10 | 0.41  | analytics-light-390  |
 | /customers  | 0.17 | 0.87  | customers-dark-1024  |
-| /leads      | 0.24 | 1.13  | leads-light-390      |
+
+(Leads' figures are from the run after the antialiasing fix; re-check them
+against diffs/report.json rather than trusting this table.)
 
 Nothing is a stub. No height mismatches. The working tree is clean and every
 change is committed.
 
-## What changed this session
+## What changed in the sessions that built this
 
-Fourteen commits, `f32ab3b` through `f8935b6`. The four route builds are the
-bulk of it; these are the ones worth knowing about because they changed
-things you might otherwise re-break:
+The four route builds are the bulk of it; these are the commits worth knowing
+about, because they changed things you might otherwise re-break:
 
 - `16aee8c` the header's search button is 32px, not 28px. It was shifting the
   whole right-hand header group by 4px on **every** route.
@@ -40,6 +42,11 @@ things you might otherwise re-break:
   card, so its plot was 299px tall at 1440 where the reference is 214px.
 - `edb19fd` the kanban win-probability bars are tinted by the card's status,
   not all chart-3.
+- `8a7f044` + `c4734b8` the capture browser now runs with --disable-lcd-text.
+  Chromium was picking subpixel or greyscale text antialiasing per compositing
+  layer, which is a race: /leads landed on one side in the reference and the
+  other locally, ghosting every glyph on the page. The whole set was re-shot
+  under the flag. **Do not re-capture again without being asked.**
 
 ## Where the remaining pixels are
 
@@ -58,29 +65,53 @@ Two known, deliberate contributors that are not bugs:
 - The customers and leads tables use `aria-label` where the reference uses
   `<span class="sr-only">`. Invisible either way; harmless to align.
 
-## Interactions still to build
+## Interactions: what works, and what is deliberately inert
 
-Everything renders and the data is real, but these controls do nothing yet.
-This is the natural next body of work after the remaining pixels:
+The interaction pass is done. Everything below works on the mock data:
 
-- Command palette (⌘K) behind the header search button and the sidebar's
-  "Search" item. Needs `cmdk`.
-- The header's date-range control (Today / Last 7 days) and the Filters and
-  Customize popovers.
-- `/customers` toolbar: All customers, Comfortable, Columns, Export.
-- `/customers` pagination: the nav buttons are wired but only page 1's ten of
-  sixteen rows were ever extracted, so page 2 needs its rows pulled from the
-  reference first.
-- `/leads`: the Status filter menu, Export, and the region card's Map view
-  (the List/Map toggle currently toggles nothing).
-- `/analytics`: "View all" on top landing pages.
-- Row drag-reorder in the customers and leads tables. Kanban *column*
-  reordering already works; row reordering does not.
-- Per-row action menus open, but their items do nothing.
+- The command palette, on Cmd/Ctrl-K, from both header search buttons and the
+  sidebar's Search item. Filters as you type, Enter navigates, Escape closes.
+- The header's date range, driven by Today, Last 7 days and the Filters menu
+  -- one piece of state, three ways into it. Customize opens a theme and
+  sidebar dialog.
+- /customers: plan filter, density, column show/hide, CSV export, pagination
+  across both pages, row drag-reorder, and a working row menu.
+- /leads: status filter, CSV export, row menu, row reorder, and the region
+  card's Map view.
+- /deals: kanban columns reorder, and cards now drag between stages with the
+  stage counts following.
+- /campaigns: the growth simulator's sliders drive the projected figures.
 
-The growth simulator on `/campaigns` IS live -- its sliders drive the
-projected leads, customers and revenue. Use it as the model for how much
-behaviour these panels should have.
+Three controls are inert on purpose, all for the same reason -- there is no
+data behind them. Do not "fix" these by inventing behaviour:
+
+- The two "View all" buttons (open deals, top landing pages). Both tables
+  already show every row the fixtures hold. They are deliberately NOT
+  disabled: a disabled button renders differently and would move the diff.
+- "Manage licenses" in the leads row menu. The reference offers it; no licence
+  data exists anywhere. It is shown unavailable rather than wired to something
+  unrelated.
+- The kanban "+" buttons. Adding a deal means inventing a card's worth of
+  data, which is worth doing properly with a form or not at all.
+
+## Where the remaining pixels are
+
+/customers at 1024 (0.82-0.87%) is the last real outlier, and it is an open
+puzzle rather than a to-do. At that width the health-gauge legend labels
+truncate in ours and do not in the reference, which narrows the legend by 23px
+and shifts the gauge 11px right. The li markup is byte-identical, every
+computed style matches, the ancestor chain matches down to the same 348px
+card -- and yet, cloned into a neutral container, our list item's min-content
+is 139.15px against the reference's 162.15px. Removing the shrink permission,
+forcing the label's width and dropping the width cap all fail to move it.
+Whatever it is, it is not in the markup or in any computed property I checked.
+
+Two known, deliberate contributors that are not bugs:
+- The campaign table's channel column uses neutral lucide icons where the
+  reference uses Google Ads / Meta / TikTok brand marks. Left that way on
+  purpose.
+- The customers and leads tables use aria-label in a few places where the
+  reference uses <span class="sr-only">. Invisible either way.
 
 ## How the person wants to work
 
