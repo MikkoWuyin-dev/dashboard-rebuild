@@ -63,7 +63,10 @@ export function SiteHeader() {
             Customize
             <LayoutTemplate />
           </Button>
-          <Button variant="ghost" size="icon-sm">
+          {/* 32px here, unlike every other icon button in the shell, which is
+              28px. Matches the reference; at 28 the whole right-hand header
+              group lands 4px off on every route. */}
+          <Button variant="ghost" size="icon">
             <Search />
             <span className="sr-only">Search</span>
           </Button>
