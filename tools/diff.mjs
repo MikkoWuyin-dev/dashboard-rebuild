@@ -62,6 +62,47 @@ const slug = (route) => (route === "/" ? "root" : route.slice(1));
 
 // ---- 1) Shoot the local rebuild into current/ --------------------------------
 mkdirSync(CURRENT_DIR, { recursive: true });
+// Preflight: confirm something is actually serving BASE_URL before spending
+// ~2 minutes shooting 42 pages that will all fail identically. Three runs were
+// lost to a stopped dev server producing 42 ERR_CONNECTION_REFUSED lines; one
+// clear line up front is worth more than 42 identical ones at the end.
+async function reachable(url, timeoutMs = 2500) {
+  const ac = new AbortController();
+  const timer = setTimeout(() => ac.abort(), timeoutMs);
+  try {
+    await fetch(url, { signal: ac.signal });
+    return true;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+if (!(await reachable(BASE_URL))) {
+  console.error(`\n  Nothing is serving ${BASE_URL}.`);
+  console.error("  The dev server is not running, or it is on another port.\n");
+
+  const base = new URL(BASE_URL);
+  const candidates = [];
+  for (let port = 3000; port <= 3010; port++) {
+    if (String(port) !== base.port) candidates.push(`${base.protocol}//${base.hostname}:${port}`);
+  }
+  const found = [];
+  for (const url of candidates) if (await reachable(url, 700)) found.push(url);
+
+  if (found.length) {
+    console.error("  Found a server on:");
+    for (const url of found) console.error(`    ${url}`);
+    console.error(`\n  Re-run with:  $env:BASE_URL="${found[0]}"; pnpm diff\n`);
+  } else {
+    console.error("  Start it in a SEPARATE terminal and leave it running:");
+    console.error("    pnpm dev\n");
+    console.error("  Then re-run the diff here. See AGENTS.md > Running the harness.\n");
+  }
+  process.exit(1);
+}
+
 console.log(`== Shooting local rebuild (${BASE_URL}) into current/ ==`);
 const shot = await shootAll({ baseUrl: BASE_URL, outDir: CURRENT_DIR });
 if (shot.failures.length) {
