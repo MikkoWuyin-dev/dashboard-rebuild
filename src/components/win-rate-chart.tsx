@@ -58,7 +58,10 @@ export function WinRateChart() {
           </span>
         </div>
 
-        <ChartContainer config={chartConfig}>
+        {/* Without this the container keeps aspect-video and the plot height
+            follows the card width: 299px at 1440, 183px at 390. The reference
+            is 214px at every viewport. */}
+        <ChartContainer config={chartConfig} className="min-h-0 w-full flex-1">
           <BarChart
             accessibilityLayer
             data={data}
