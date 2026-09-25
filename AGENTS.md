@@ -30,6 +30,24 @@ Read this before changing anything.
 - Avatars are masked on both sides via [data-slot="avatar"]. Our placeholders
   differ from the target's photos by design and are excluded.
 
+## Running the harness (two terminals, never one)
+
+`capture:ref` hits the LIVE target; `diff` hits your dev server. Running them
+in the terminal that holds `pnpm dev` kills the server, and the diff then
+reports 42 connection failures. Two failed runs were caused by exactly this.
+
+  Terminal 1:  pnpm dev                     # start it and leave it alone
+  Terminal 2:  pnpm capture:ref             # wait for "Captured 42/42"
+               $env:BASE_URL="http://localhost:3000"; pnpm diff
+
+Never run the diff on a partial reference set. A capture that stops early
+leaves reference/ mixed across two mask definitions, producing numbers that
+look real and are not -- the one failure this harness cannot catch for you.
+If a capture stops short: `git checkout -- reference/` and start over.
+
+Expect `capture:ref` to stitch ~40/42 shots while the local diff capture
+stitches only the routes that are built; that asymmetry is correct.
+
 ## Rules that do not bend
 - Never raise the pixelmatch threshold.
 - Never edit, regenerate or resize reference images to make a number fall.
