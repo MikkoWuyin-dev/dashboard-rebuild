@@ -178,7 +178,17 @@ const GRIP_CLASS =
 const CARD_CLASS =
   "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl cursor-grab touch-none active:cursor-grabbing data-[dragging=true]:opacity-40"
 
-function DealCard({ deal }: { deal: Deal }) {
+function DealCard({
+  deal,
+  dragging,
+  onDragStart,
+  onDragEnd,
+}: {
+  deal: Deal
+  dragging?: boolean
+  onDragStart?: () => void
+  onDragEnd?: () => void
+}) {
   const statusSlug = deal.status.toLowerCase().replace(/\s+/g, "-")
 
   return (
@@ -187,7 +197,10 @@ function DealCard({ deal }: { deal: Deal }) {
       data-size="sm"
       className={CARD_CLASS}
       data-status={statusSlug}
-      data-dragging="false"
+      data-dragging={dragging ? "true" : "false"}
+      draggable
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
       role="button"
       tabIndex={0}
     >
@@ -329,6 +342,39 @@ export function DealsBoard() {
   const dragIndexRef = React.useRef<number | null>(null)
   const dxRef = React.useRef(0)
   const [dragX, setDragX] = React.useState(0)
+  const [draggingCard, setDraggingCard] = React.useState<{
+    company: string
+    from: string
+  } | null>(null)
+
+  // Dropping a card moves it between stages and shifts the two stage counts by
+  // one. The stage's aggregate value is left alone: it covers every deal in
+  // the stage (412 of them in Qualified), not the handful the board shows, so
+  // there is no honest way to recompute it from one card.
+  function moveCard(to: string) {
+    const card = draggingCard
+    setDraggingCard(null)
+    if (!card || card.from === to) return
+    setStages((prev) => {
+      const deal = prev
+        .find((s) => s.stage === card.from)
+        ?.deals.find((d) => d.company === card.company)
+      if (!deal) return prev
+      return prev.map((stage) => {
+        if (stage.stage === card.from) {
+          return {
+            ...stage,
+            count: stage.count - 1,
+            deals: stage.deals.filter((d) => d.company !== card.company),
+          }
+        }
+        if (stage.stage === to) {
+          return { ...stage, count: stage.count + 1, deals: [...stage.deals, deal] }
+        }
+        return stage
+      })
+    })
+  }
 
   const beginColumnDrag = (index: number) => (event: React.PointerEvent) => {
     if (event.button !== 0) return
@@ -444,9 +490,21 @@ export function DealsBoard() {
           <div
             data-slot="kanban-column-cards"
             className="flex flex-col gap-1.5 min-h-16"
+            onDragOver={(event) => {
+              if (draggingCard) event.preventDefault()
+            }}
+            onDrop={() => moveCard(stage.stage)}
           >
             {stage.deals.map((deal) => (
-              <DealCard key={deal.company} deal={deal} />
+              <DealCard
+                key={deal.company}
+                deal={deal}
+                dragging={draggingCard?.company === deal.company}
+                onDragStart={() =>
+                  setDraggingCard({ company: deal.company, from: stage.stage })
+                }
+                onDragEnd={() => setDraggingCard(null)}
+              />
             ))}
           </div>
         </section>
