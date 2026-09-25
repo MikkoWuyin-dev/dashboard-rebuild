@@ -230,10 +230,10 @@ export function CustomersTable() {
                 <TableCell className="pl-4">
                   <Button
                     variant="ghost"
-                    size="icon"
+                    size="icon-sm"
                     aria-roledescription="sortable"
                     aria-label={`Drag to reorder ${row.name}`}
-                    className="size-7 cursor-grab text-muted-foreground"
+                    className="cursor-grab text-muted-foreground active:cursor-grabbing"
                   >
                     <GripVertical />
                   </Button>
@@ -267,9 +267,8 @@ export function CustomersTable() {
                         render={
                           <Button
                             variant="ghost"
-                            size="icon"
+                            size="icon-sm"
                             aria-label="Open row actions"
-                            className="size-7"
                           />
                         }
                       >
@@ -328,16 +327,16 @@ export function CustomersTable() {
             data-slot="data-table-pagination-buttons"
             className="flex items-center gap-1.5"
           >
-            <Button variant="outline" size="icon" className="size-7" disabled aria-label="Go to first page">
+            <Button variant="outline" size="icon-sm" disabled aria-label="Go to first page">
               <ChevronsLeft />
             </Button>
-            <Button variant="outline" size="icon" className="size-7" disabled aria-label="Go to previous page">
+            <Button variant="outline" size="icon-sm" disabled aria-label="Go to previous page">
               <ChevronLeft />
             </Button>
-            <Button variant="outline" size="icon" className="size-7" aria-label="Go to next page">
+            <Button variant="outline" size="icon-sm" aria-label="Go to next page">
               <ChevronRight />
             </Button>
-            <Button variant="outline" size="icon" className="size-7" aria-label="Go to last page">
+            <Button variant="outline" size="icon-sm" aria-label="Go to last page">
               <ChevronsRight />
             </Button>
           </div>

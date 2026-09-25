@@ -1,0 +1,354 @@
+{
+  "metrics": [
+    {
+      "title": "New leads",
+      "value": "2,847",
+      "delta": "+4.2%",
+      "tone": "success",
+      "note": "from last month"
+    },
+    {
+      "title": "MQLs",
+      "value": "1,720",
+      "delta": "+6.0%",
+      "tone": "success",
+      "note": "from last month"
+    },
+    {
+      "title": "Cost per lead",
+      "value": "$29.61",
+      "delta": "+12.5%",
+      "tone": "destructive",
+      "note": "from last month"
+    },
+    {
+      "title": "Lead conversion rate",
+      "value": "3.4%",
+      "delta": "+12.5%",
+      "tone": "success",
+      "note": "from last month"
+    }
+  ],
+  "overTime": {
+    "total": "2847",
+    "delta": "+12.5%",
+    "note": "vs previous period",
+    "domain": [
+      0,
+      120
+    ],
+    "points": [
+      {
+        "date": "Jul 1",
+        "previous": 63,
+        "current": 70
+      },
+      {
+        "date": "Jul 2",
+        "previous": 65,
+        "current": 71
+      },
+      {
+        "date": "Jul 3",
+        "previous": 67,
+        "current": 75
+      },
+      {
+        "date": "Jul 4",
+        "previous": 66,
+        "current": 76
+      },
+      {
+        "date": "Jul 5",
+        "previous": 70,
+        "current": 77
+      },
+      {
+        "date": "Jul 6",
+        "previous": 71,
+        "current": 80
+      },
+      {
+        "date": "Jul 7",
+        "previous": 75,
+        "current": 83
+      },
+      {
+        "date": "Jul 8",
+        "previous": 76,
+        "current": 83
+      },
+      {
+        "date": "Jul 9",
+        "previous": 75,
+        "current": 83
+      },
+      {
+        "date": "Jul 10",
+        "previous": 72,
+        "current": 80
+      },
+      {
+        "date": "Jul 11",
+        "previous": 74,
+        "current": 82
+      },
+      {
+        "date": "Jul 12",
+        "previous": 72,
+        "current": 80
+      },
+      {
+        "date": "Jul 13",
+        "previous": 70,
+        "current": 80
+      },
+      {
+        "date": "Jul 14",
+        "previous": 71,
+        "current": 80
+      },
+      {
+        "date": "Jul 15",
+        "previous": 74,
+        "current": 81
+      },
+      {
+        "date": "Jul 16",
+        "previous": 75,
+        "current": 86
+      },
+      {
+        "date": "Jul 17",
+        "previous": 76,
+        "current": 88
+      },
+      {
+        "date": "Jul 18",
+        "previous": 80,
+        "current": 89
+      },
+      {
+        "date": "Jul 19",
+        "previous": 80,
+        "current": 91
+      },
+      {
+        "date": "Jul 20",
+        "previous": 80,
+        "current": 91
+      },
+      {
+        "date": "Jul 21",
+        "previous": 83,
+        "current": 94
+      },
+      {
+        "date": "Jul 22",
+        "previous": 86,
+        "current": 98
+      },
+      {
+        "date": "Jul 23",
+        "previous": 91,
+        "current": 100
+      },
+      {
+        "date": "Jul 24",
+        "previous": 89,
+        "current": 103
+      },
+      {
+        "date": "Jul 25",
+        "previous": 92,
+        "current": 104
+      },
+      {
+        "date": "Jul 26",
+        "previous": 88,
+        "current": 101
+      },
+      {
+        "date": "Jul 27",
+        "previous": 93,
+        "current": 104
+      },
+      {
+        "date": "Jul 28",
+        "previous": 92,
+        "current": 105
+      },
+      {
+        "date": "Jul 29",
+        "previous": 92,
+        "current": 104
+      },
+      {
+        "date": "Jul 30",
+        "previous": 92,
+        "current": 102
+      },
+      {
+        "date": "Jul 31",
+        "previous": 91,
+        "current": 104
+      },
+      {
+        "date": "Aug 1",
+        "previous": 90,
+        "current": 102
+      }
+    ]
+  },
+  "funnel": [
+    {
+      "id": "customers",
+      "label": "Customers",
+      "count": "96",
+      "value": 3,
+      "color": "bg-chart-5",
+      "fill": "var(--chart-5)"
+    },
+    {
+      "id": "deals",
+      "label": "Deals",
+      "count": "720",
+      "value": 25,
+      "color": "bg-chart-4",
+      "fill": "var(--chart-4)"
+    },
+    {
+      "id": "sqls",
+      "label": "SQLs",
+      "count": "940",
+      "value": 33,
+      "color": "bg-chart-3",
+      "fill": "var(--chart-3)"
+    },
+    {
+      "id": "mqls",
+      "label": "MQLs",
+      "count": "1,720",
+      "value": 60,
+      "color": "bg-chart-2",
+      "fill": "var(--chart-2)"
+    },
+    {
+      "id": "leads",
+      "label": "Leads",
+      "count": "2,847",
+      "value": 100,
+      "color": "bg-chart-1",
+      "fill": "var(--chart-1)"
+    }
+  ],
+  "recent": [
+    {
+      "company": "Dropbox",
+      "domain": "dropbox.com",
+      "status": "New",
+      "statusVariant": "secondary",
+      "about": "File storage",
+      "aboutNote": "Cloud sync for teams",
+      "owners": [
+        "Ava Brooks",
+        "Liam Chen",
+        "Noah Patel"
+      ],
+      "score": 80
+    },
+    {
+      "company": "Notion",
+      "domain": "notion.so",
+      "status": "New",
+      "statusVariant": "secondary",
+      "about": "Connected workspace",
+      "aboutNote": "Docs, wikis, and projects",
+      "owners": [
+        "Mia Rivera",
+        "Ethan Kim",
+        "Sofia Nunes"
+      ],
+      "score": 70
+    },
+    {
+      "company": "Atlassian",
+      "domain": "atlassian.com",
+      "status": "Lost",
+      "statusVariant": "destructive",
+      "about": "Dev tooling",
+      "aboutNote": "Issue tracking at scale",
+      "owners": [
+        "Jonas Weber",
+        "Priya Raman",
+        "Tomas Silva"
+      ],
+      "score": 20
+    },
+    {
+      "company": "Zendesk",
+      "domain": "zendesk.com",
+      "status": "New",
+      "statusVariant": "secondary",
+      "about": "Support platform",
+      "aboutNote": "Omnichannel customer service",
+      "owners": [
+        "Hana Sato",
+        "Oscar Lind",
+        "Ruth Adeyemi"
+      ],
+      "score": 90
+    },
+    {
+      "company": "Gumroad",
+      "domain": "gumroad.com",
+      "status": "Lost",
+      "statusVariant": "destructive",
+      "about": "Creator commerce",
+      "aboutNote": "Sell digital products",
+      "owners": [
+        "Dylan Moore",
+        "Iris Novak",
+        "Kofi Mensah"
+      ],
+      "score": 30
+    }
+  ],
+  "regions": [
+    {
+      "country": "United States",
+      "slug": "united-states",
+      "leads": "512",
+      "share": "29%",
+      "pipeline": "$1,340,000"
+    },
+    {
+      "country": "Germany",
+      "slug": "germany",
+      "leads": "428",
+      "share": "24%",
+      "pipeline": "$920,000"
+    },
+    {
+      "country": "United Kingdom",
+      "slug": "united-kingdom",
+      "leads": "342",
+      "share": "19%",
+      "pipeline": "$835,000"
+    },
+    {
+      "country": "Brazil",
+      "slug": "brazil",
+      "leads": "296",
+      "share": "17%",
+      "pipeline": "$370,000"
+    },
+    {
+      "country": "Australia",
+      "slug": "australia",
+      "leads": "214",
+      "share": "12%",
+      "pipeline": "$405,000"
+    }
+  ]
+}
