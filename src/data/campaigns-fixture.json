@@ -1,0 +1,398 @@
+{
+  "campaigns": [
+    {
+      "name": "Summer launch \u2013 Search",
+      "channel": "Google Ads",
+      "icon": "search",
+      "spend": "$9,800",
+      "clicks": "6,200",
+      "leads": "310",
+      "delta": "+18%",
+      "cpl": "$31.61",
+      "spark": [
+        15.0,
+        13.0,
+        10.0,
+        8.0,
+        9.0,
+        5.0,
+        1.0
+      ],
+      "tone": "text-success"
+    },
+    {
+      "name": "Retargeting \u2013 Meta",
+      "channel": "Meta",
+      "icon": "meta",
+      "spend": "$7,400",
+      "clicks": "5,900",
+      "leads": "265",
+      "delta": "+9%",
+      "cpl": "$27.92",
+      "spark": [
+        15.0,
+        11.0,
+        7.0,
+        9.0,
+        5.0,
+        3.0,
+        1.0
+      ],
+      "tone": "text-success"
+    },
+    {
+      "name": "Brand search",
+      "channel": "Google Ads",
+      "icon": "search",
+      "spend": "$6,200",
+      "clicks": "4,800",
+      "leads": "248",
+      "delta": "0%",
+      "cpl": "$25.00",
+      "spark": [
+        5.67,
+        15.0,
+        1.0,
+        10.33,
+        5.67,
+        10.33,
+        10.33
+      ],
+      "tone": "text-muted-foreground"
+    },
+    {
+      "name": "Newsletter reactivation",
+      "channel": "Email",
+      "icon": "mail",
+      "spend": "$1,900",
+      "clicks": "2,700",
+      "leads": "152",
+      "delta": "+24%",
+      "cpl": "$12.50",
+      "spark": [
+        15.0,
+        13.73,
+        11.18,
+        9.91,
+        7.36,
+        4.82,
+        1.0
+      ],
+      "tone": "text-success"
+    },
+    {
+      "name": "UGC creators \u2013 TikTok",
+      "channel": "TikTok",
+      "icon": "tiktok",
+      "spend": "$4,200",
+      "clicks": "3,400",
+      "leads": "96",
+      "delta": "-16%",
+      "cpl": "$43.75",
+      "spark": [
+        1.0,
+        2.56,
+        4.11,
+        7.22,
+        10.33,
+        13.44,
+        15.0
+      ],
+      "tone": "text-destructive"
+    }
+  ],
+  "allocation": [
+    {
+      "label": "Google ads",
+      "amount": "$21,700",
+      "share": "35%",
+      "value": 21700
+    },
+    {
+      "label": "Meta",
+      "amount": "$17,300",
+      "share": "28%",
+      "value": 17300
+    },
+    {
+      "label": "LinkedIn",
+      "amount": "$11,100",
+      "share": "18%",
+      "value": 11100
+    },
+    {
+      "label": "TikTok",
+      "amount": "$7,400",
+      "share": "12%",
+      "value": 7400
+    },
+    {
+      "label": "Other",
+      "amount": "$4,400",
+      "share": "7%",
+      "value": 4400
+    }
+  ],
+  "engagement": {
+    "hours": [
+      "12am",
+      "4am",
+      "8am",
+      "12pm",
+      "4pm",
+      "8pm"
+    ],
+    "days": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ],
+    "rows": [
+      [
+        9,
+        9,
+        9,
+        9,
+        10,
+        12,
+        11
+      ],
+      [
+        8,
+        8,
+        8,
+        8,
+        9,
+        9,
+        9
+      ],
+      [
+        44,
+        53,
+        56,
+        50,
+        36,
+        14,
+        12
+      ],
+      [
+        36,
+        42,
+        43,
+        39,
+        33,
+        22,
+        20
+      ],
+      [
+        42,
+        47,
+        46,
+        43,
+        29,
+        16,
+        16
+      ],
+      [
+        24,
+        28,
+        27,
+        25,
+        21,
+        17,
+        16
+      ]
+    ]
+  },
+  "simulator": {
+    "controls": [
+      {
+        "label": "Monthly spend",
+        "display": "$100,000",
+        "min": 5000,
+        "max": 200000,
+        "step": 1000,
+        "value": 100000
+      },
+      {
+        "label": "Cost per lead",
+        "display": "$29.50",
+        "min": 10,
+        "max": 100,
+        "step": 0.5,
+        "value": 29.5
+      },
+      {
+        "label": "Lead to customer rate",
+        "display": "3.4%",
+        "min": 0.5,
+        "max": 15,
+        "step": 0.1,
+        "value": 3.4
+      }
+    ],
+    "results": [
+      {
+        "label": "Projected leads",
+        "value": "3,389"
+      },
+      {
+        "label": "Projected customers",
+        "value": "115"
+      },
+      {
+        "label": "Projected revenue",
+        "value": "$483,000"
+      }
+    ]
+  },
+  "cpa": {
+    "headline": "$29.61",
+    "delta": "+3.7%",
+    "note": "vs previous period",
+    "domain": [
+      0,
+      49.9274
+    ],
+    "ticks": [
+      0,
+      14.4442,
+      28.8878,
+      49.9274
+    ],
+    "points": [
+      {
+        "date": "Jul 1",
+        "cpa": 19.26
+      },
+      {
+        "date": "Jul 2",
+        "cpa": 21.33
+      },
+      {
+        "date": "Jul 3",
+        "cpa": 22.0
+      },
+      {
+        "date": "Jul 4",
+        "cpa": 23.3
+      },
+      {
+        "date": "Jul 5",
+        "cpa": 23.83
+      },
+      {
+        "date": "Jul 6",
+        "cpa": 26.43
+      },
+      {
+        "date": "Jul 7",
+        "cpa": 24.22
+      },
+      {
+        "date": "Jul 8",
+        "cpa": 23.64
+      },
+      {
+        "date": "Jul 9",
+        "cpa": 23.78
+      },
+      {
+        "date": "Jul 10",
+        "cpa": 23.45
+      },
+      {
+        "date": "Jul 11",
+        "cpa": 23.5
+      },
+      {
+        "date": "Jul 12",
+        "cpa": 23.35
+      },
+      {
+        "date": "Jul 13",
+        "cpa": 23.25
+      },
+      {
+        "date": "Jul 14",
+        "cpa": 24.8
+      },
+      {
+        "date": "Jul 15",
+        "cpa": 25.9
+      },
+      {
+        "date": "Jul 16",
+        "cpa": 28.26
+      },
+      {
+        "date": "Jul 17",
+        "cpa": 28.7
+      },
+      {
+        "date": "Jul 18",
+        "cpa": 30.0
+      },
+      {
+        "date": "Jul 19",
+        "cpa": 32.07
+      },
+      {
+        "date": "Jul 20",
+        "cpa": 34.62
+      },
+      {
+        "date": "Jul 21",
+        "cpa": 35.15
+      },
+      {
+        "date": "Jul 22",
+        "cpa": 37.02
+      },
+      {
+        "date": "Jul 23",
+        "cpa": 37.55
+      },
+      {
+        "date": "Jul 24",
+        "cpa": 36.21
+      },
+      {
+        "date": "Jul 25",
+        "cpa": 34.95
+      },
+      {
+        "date": "Jul 26",
+        "cpa": 36.78
+      },
+      {
+        "date": "Jul 27",
+        "cpa": 36.64
+      },
+      {
+        "date": "Jul 28",
+        "cpa": 35.39
+      },
+      {
+        "date": "Jul 29",
+        "cpa": 36.59
+      },
+      {
+        "date": "Jul 30",
+        "cpa": 36.06
+      },
+      {
+        "date": "Jul 31",
+        "cpa": 39.19
+      },
+      {
+        "date": "Aug 1",
+        "cpa": 40.3
+      }
+    ]
+  }
+}
