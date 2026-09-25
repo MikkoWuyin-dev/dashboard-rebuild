@@ -45,6 +45,16 @@ const statusVariant: Record<
   Committed: "success",
 }
 
+// The win-probability bar is tinted by the deal's status, not by the number:
+// New is chart-3, At risk warning, Committed success, and Working and On track
+// keep the plain primary fill. Read off the reference card by card -- 45% is
+// chart-3 while 48% is plain, so it cannot be a threshold on the percentage.
+const probabilityTone: Record<string, string> = {
+  New: "**:data-[slot=progress-indicator]:bg-chart-3",
+  "At risk": "**:data-[slot=progress-indicator]:bg-warning",
+  Committed: "**:data-[slot=progress-indicator]:bg-success",
+}
+
 // The target cycles person-1..7 photos from assets.shadcncraft.com; both
 // sides mask [data-slot=avatar-image] during diffing, so our cards render
 // the fixture's initials as the visible avatar fallback instead.
@@ -230,7 +240,10 @@ function DealCard({ deal }: { deal: Deal }) {
               aria-valuetext={`${deal.winProbability}%`}
               role="progressbar"
               data-slot="progress"
-              className="flex flex-wrap gap-3 **:data-[slot=progress-indicator]:bg-chart-3"
+              className={cn(
+                "flex flex-wrap gap-3",
+                probabilityTone[deal.status],
+              )}
             >
               <div
                 data-progressing=""
