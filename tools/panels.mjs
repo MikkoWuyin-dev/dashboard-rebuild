@@ -12,7 +12,6 @@ const main = html.slice(start, html.indexOf("</main>", start));
 const re = /<\/?([a-zA-Z][\w-]*)((?:"[^"]*"|'[^']*'|[^"'>])*)>/g;
 let m;
 let depth = 0;
-let lastTextEnd = 0;
 const VOID = new Set([
   "img", "br", "hr", "input", "meta", "link", "path", "circle", "rect", "line",
   "polyline", "polygon", "ellipse", "use", "stop", "col", "area", "base",
@@ -40,7 +39,6 @@ const isInteresting = (attrs, tag) => {
   if (slot === "card-title") return { kind: "title", label: "" };
   if (slot === "card-description") return { kind: "desc", label: "" };
   if (slot === "chart") {
-    const style = /(?<=<style)[^]*?(?=<\/style>)/;
     return { kind: "chart", label: "" };
   }
   if (slot === "table") return { kind: "table", label: "" };
@@ -51,18 +49,14 @@ const isInteresting = (attrs, tag) => {
 };
 
 re.lastIndex = start;
-lastTextEnd = start;
 
 while ((m = re.exec(main))) {
   const isClose = m[0].startsWith("</");
   const tag = m[1].toLowerCase();
   const attrs = m[2] ?? "";
-  const idx = main.indexOf(m[0], re.lastIndex - m[0].length);
+  const info = isInteresting(attrs, tag);
 
   if (!isClose && !VOID.has(tag)) {
-    const text = textBetween(lastTextEnd, idx);
-    lastTextEnd = re.lastIndex;
-    const info = isInteresting(attrs, tag);
     if (info) {
       events.push({ depth, ...info, text: "" });
       if (["metric-title", "title", "desc"].includes(info.kind)) {
@@ -74,7 +68,6 @@ while ((m = re.exec(main))) {
     depth++;
   } else if (isClose) {
     depth = Math.max(0, depth - 1);
-    lastTextEnd = re.lastIndex;
   }
 }
 

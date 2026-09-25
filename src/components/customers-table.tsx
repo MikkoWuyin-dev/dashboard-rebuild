@@ -147,9 +147,14 @@ export function CustomersTable() {
 
   // Any change to what is being listed sends you back to the first page;
   // otherwise filtering down to four rows leaves you on an empty page 2.
-  React.useEffect(() => {
+  // Done during render (the React-recommended alternative to setState-in-
+  // an-effect) so the reset lands before the change is painted.
+  const resetKey = `${query}\u0000${plan}\u0000${pageSize}\u0000${sort?.key ?? ""}\u0000${sort?.dir ?? ""}`
+  const [prevResetKey, setPrevResetKey] = React.useState(resetKey)
+  if (prevResetKey !== resetKey) {
+    setPrevResetKey(resetKey)
     setPage(1)
-  }, [query, plan, pageSize, sort])
+  }
 
   function toggleSort(key: "name" | "mrr") {
     setSort((prev) =>

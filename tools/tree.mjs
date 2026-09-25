@@ -14,10 +14,8 @@ const VOID = new Set([
 
 const re = /<\/?([a-zA-Z][\w-]*)((?:"[^"]*"|'[^']*'|[^"'>])*)>/g;
 let m;
-let depth = 0;
 let lastTextEnd = 0;
 const out = [];
-let skipDepth = null;
 
 function textBetween(from, to) {
   return html.slice(from, to).replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
