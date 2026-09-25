@@ -19,8 +19,13 @@ All seven routes are built, and every control on them is wired. Last full run,
 | /analytics  | 0.10 | 0.41  | analytics-light-390  |
 | /customers  | 0.17 | 0.87  | customers-dark-1024  |
 
-(Leads' figures are from the run after the antialiasing fix; re-check them
-against diffs/report.json rather than trusting this table.)
+**Read `diffs/report.json` before trusting this table.** The newest report in
+the tree (06:46) has one artifact in it: campaigns-dark-390 shows 0.79% where
+it had been 0.07%. That is Next's dev overlay -- a stale HMR error during the
+run parked an "1 Issue" toast in that one shot. Commit `c6d0f00` hides the
+overlay during capture, and that report predates it. **Your first diff run
+should put that pair back to ~0.07%. If it does not, something real is
+wrong and it is worth chasing.**
 
 Nothing is a stub. No height mismatches. The working tree is clean and every
 change is committed.
@@ -112,6 +117,16 @@ Two known, deliberate contributors that are not bugs:
   purpose.
 - The customers and leads tables use aria-label in a few places where the
   reference uses <span class="sr-only">. Invisible either way.
+
+## Start here
+
+1. Two terminals (`AGENTS.md` has the procedure). `pnpm dev` in one.
+2. `$env:ROUTES=""; pnpm diff` in the other, and check campaigns-dark-390 is
+   back to ~0.07%. That confirms the overlay fix and gives you a clean
+   baseline to work against.
+3. Then pick up whatever the person asks for. If it is open-ended, the honest
+   list of remaining work is short: the customers-1024 puzzle below, the
+   kanban "+" if they want it built, and whatever polish they name.
 
 ## How the person wants to work
 

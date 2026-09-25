@@ -38,9 +38,16 @@ Read this before changing anything.
   waits for every recharts shape's geometry to stop changing. That last wait
   is not optional: recharts animates in JavaScript, which CSS cannot stop, and
   without it 26 of the 42 reference shots were caught mid-animation.
-- `next.config.ts` sets `devIndicators: false`. Next's dev badge is pinned to
-  the bottom-left of the viewport, so it lands inside every 390px capture and
-  in none of the reference's.
+- `next.config.ts` sets `devIndicators: false` and the injected CSS hides
+  `nextjs-portal`. Next's dev overlay puts both an idle badge and an error
+  toast at the bottom-left of the viewport, and either will land in the shot.
+  The toast is worse than the badge because it appears only sometimes: one
+  stale HMR error during a run put an "1 Issue" pill into a single shot and
+  read as a regression on that one pair. The reference is a production build
+  with no such element, so hiding it changes nothing on that side.
+- The capture browser launches with `--disable-lcd-text`. Chromium otherwise
+  picks subpixel or greyscale text antialiasing per compositing layer, and
+  which one a page gets is a race -- it ghosted every glyph on /leads.
 
 ## Running the harness (two terminals, never one)
 
