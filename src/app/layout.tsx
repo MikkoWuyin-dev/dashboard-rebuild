@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { AppSidebar } from "@/components/app-sidebar";
+import { CommandPaletteProvider } from "@/components/command-palette";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import "./globals.css";
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {/* h-svh + min-h-0 (the target's own wrapper classes) constrain the
               height chain so the inner overflow-auto container scrolls, as on
               the target — without it the document grows instead. */}
+          <CommandPaletteProvider>
           <SidebarProvider className="h-svh min-h-0">
             <AppSidebar />
             <SidebarInset className="min-h-0 overflow-hidden">
@@ -46,6 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               </div>
             </SidebarInset>
           </SidebarProvider>
+          </CommandPaletteProvider>
         </ThemeProvider>
       </body>
     </html>
