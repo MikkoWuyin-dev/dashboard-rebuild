@@ -1,0 +1,156 @@
+{
+  "table": [
+    {
+      "name": "Acme Corp",
+      "email": "billing@acme.com",
+      "plan": "Enterprise",
+      "planVariant": "outline",
+      "mrr": "$2,490.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Jan 12, 2026"
+    },
+    {
+      "name": "Northwind Labs",
+      "email": "ops@northwind.io",
+      "plan": "Team",
+      "planVariant": "outline",
+      "mrr": "$890.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Feb 3, 2026"
+    },
+    {
+      "name": "Lumen & Co",
+      "email": "hello@lumen.co",
+      "plan": "Pro",
+      "planVariant": "outline",
+      "mrr": "$49.00",
+      "health": "At risk",
+      "healthVariant": "warning",
+      "created": "Jun 21, 2026"
+    },
+    {
+      "name": "Fernhill Studio",
+      "email": "team@fernhill.design",
+      "plan": "Pro",
+      "planVariant": "outline",
+      "mrr": "$49.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Mar 18, 2026"
+    },
+    {
+      "name": "Baxter Freight",
+      "email": "it@baxterfreight.com",
+      "plan": "Team",
+      "planVariant": "outline",
+      "mrr": "$890.00",
+      "health": "Critical",
+      "healthVariant": "destructive",
+      "created": "Nov 2, 2025"
+    },
+    {
+      "name": "Hoku Health",
+      "email": "admin@hoku.health",
+      "plan": "Enterprise",
+      "planVariant": "outline",
+      "mrr": "$3,120.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Apr 9, 2026"
+    },
+    {
+      "name": "Quill Analytics",
+      "email": "dev@quill.dev",
+      "plan": "Free",
+      "planVariant": "outline",
+      "mrr": "$0.00",
+      "health": "At risk",
+      "healthVariant": "warning",
+      "created": "Jun 28, 2026"
+    },
+    {
+      "name": "Marlow & Sons",
+      "email": "accounts@marlow.co",
+      "plan": "Pro",
+      "planVariant": "outline",
+      "mrr": "$49.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "May 5, 2026"
+    },
+    {
+      "name": "Peak Outfitters",
+      "email": "hello@peakoutfitters.com",
+      "plan": "Team",
+      "planVariant": "outline",
+      "mrr": "$890.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Dec 14, 2025"
+    },
+    {
+      "name": "Solstice Media",
+      "email": "billing@solstice.media",
+      "plan": "Pro",
+      "planVariant": "outline",
+      "mrr": "$49.00",
+      "health": "Healthy",
+      "healthVariant": "success",
+      "created": "Jan 30, 2026"
+    }
+  ],
+  "leaderboard": [
+    {
+      "rank": 1,
+      "name": "Noah Mark Davis",
+      "initials": "ND",
+      "attainedK": 410,
+      "quotaK": 250
+    },
+    {
+      "rank": 2,
+      "name": "Ethan Parker Jenson",
+      "initials": "EJ",
+      "attainedK": 220,
+      "quotaK": 200
+    },
+    {
+      "rank": 3,
+      "name": "Sophia Brown",
+      "initials": "SB",
+      "attainedK": 230,
+      "quotaK": 230
+    },
+    {
+      "rank": 4,
+      "name": "Liam Smith",
+      "initials": "LS",
+      "attainedK": 160,
+      "quotaK": 210
+    },
+    {
+      "rank": 5,
+      "name": "Olivia Johnson",
+      "initials": "OJ",
+      "attainedK": 135,
+      "quotaK": 220
+    }
+  ],
+  "healthScore": 86,
+  "healthBands": [
+    [
+      "Healthy score",
+      "80-100"
+    ],
+    [
+      "At risk score",
+      "50-79"
+    ],
+    [
+      "Critical score",
+      "0-49"
+    ]
+  ]
+}
