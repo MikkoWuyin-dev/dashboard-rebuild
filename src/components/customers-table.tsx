@@ -200,6 +200,7 @@ export function CustomersTable() {
                       checked={allVisibleSelected}
                       onCheckedChange={toggleAll}
                       aria-label="Select all customers"
+                      className="mr-1"
                     />
                   ) : SORTABLE[i] ? (
                     <div
@@ -242,6 +243,7 @@ export function CustomersTable() {
                     checked={selected.has(row.name)}
                     onCheckedChange={() => toggle(row.name)}
                     aria-label={`Select ${row.name}`}
+                    className="mr-1"
                   />
                 </TableCell>
                 <TableCell>{row.name}</TableCell>
