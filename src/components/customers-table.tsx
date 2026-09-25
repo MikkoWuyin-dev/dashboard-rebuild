@@ -1,7 +1,15 @@
 "use client"
 
 import * as React from "react"
-import { GripVertical, MoreHorizontal, Search } from "lucide-react"
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  GripVertical,
+  MoreHorizontal,
+  Search,
+} from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -13,6 +21,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import {
   Table,
   TableBody,
@@ -148,7 +163,7 @@ export function CustomersTable() {
                     size="icon"
                     aria-roledescription="sortable"
                     aria-label={`Drag to reorder ${row.name}`}
-                    className="cursor-grab text-muted-foreground"
+                    className="size-7 cursor-grab text-muted-foreground"
                   >
                     <GripVertical />
                   </Button>
@@ -183,6 +198,7 @@ export function CustomersTable() {
                             variant="ghost"
                             size="icon"
                             aria-label="Open row actions"
+                            className="size-7"
                           />
                         }
                       >
@@ -200,6 +216,61 @@ export function CustomersTable() {
             ))}
           </TableBody>
         </Table>
+      </div>
+
+      {/* The reference paginates 16 rows at 10 per page; we hold page 1. Nav
+          buttons are size-7, first/previous disabled on page 1. */}
+      <div
+        data-slot="data-table-pagination"
+        className="flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <p
+          data-slot="data-table-pagination-info"
+          className="text-sm text-muted-foreground max-sm:hidden"
+        >
+          {selected.size} of {fixture.totalRows} row(s) selected
+        </p>
+        <div
+          data-slot="data-table-pagination-controls"
+          className="flex flex-wrap items-center gap-3 max-sm:justify-between lg:gap-7"
+        >
+          <div
+            data-slot="data-table-pagination-page-size"
+            className="flex items-center gap-1.5 max-sm:hidden"
+          >
+            <span className="text-sm font-medium">Rows per page</span>
+            <Select value={String(fixture.pageSize)}>
+              <SelectTrigger size="sm" aria-label="Rows per page">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+                <SelectItem value="50">50</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div data-slot="data-table-pagination-page-info" className="text-sm">
+            Page 1 of {Math.ceil(fixture.totalRows / fixture.pageSize)}
+          </div>
+          <div
+            data-slot="data-table-pagination-buttons"
+            className="flex items-center gap-1.5"
+          >
+            <Button variant="outline" size="icon" className="size-7" disabled aria-label="Go to first page">
+              <ChevronsLeft />
+            </Button>
+            <Button variant="outline" size="icon" className="size-7" disabled aria-label="Go to previous page">
+              <ChevronLeft />
+            </Button>
+            <Button variant="outline" size="icon" className="size-7" aria-label="Go to next page">
+              <ChevronRight />
+            </Button>
+            <Button variant="outline" size="icon" className="size-7" aria-label="Go to last page">
+              <ChevronsRight />
+            </Button>
+          </div>
+        </div>
       </div>
     </section>
   )
