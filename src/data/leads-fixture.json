@@ -320,35 +320,45 @@
       "slug": "united-states",
       "leads": "512",
       "share": "29%",
-      "pipeline": "$1,340,000"
+      "pipeline": "$1,340,000",
+      "left": "18.5%",
+      "top": "27%"
     },
     {
       "country": "Germany",
       "slug": "germany",
       "leads": "428",
       "share": "24%",
-      "pipeline": "$920,000"
+      "pipeline": "$920,000",
+      "left": "51%",
+      "top": "24%"
     },
     {
       "country": "United Kingdom",
       "slug": "united-kingdom",
       "leads": "342",
       "share": "19%",
-      "pipeline": "$835,000"
+      "pipeline": "$835,000",
+      "left": "47.5%",
+      "top": "21%"
     },
     {
       "country": "Brazil",
       "slug": "brazil",
       "leads": "296",
       "share": "17%",
-      "pipeline": "$370,000"
+      "pipeline": "$370,000",
+      "left": "36.5%",
+      "top": "68%"
     },
     {
       "country": "Australia",
       "slug": "australia",
       "leads": "214",
       "share": "12%",
-      "pipeline": "$405,000"
+      "pipeline": "$405,000",
+      "left": "85%",
+      "top": "78%"
     }
   ]
 }

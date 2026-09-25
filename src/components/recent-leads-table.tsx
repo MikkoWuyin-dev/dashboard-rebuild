@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { ChevronDown, GripVertical, MoreHorizontal } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarGroup } from "@/components/ui/avatar"
@@ -9,6 +10,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {
@@ -62,7 +65,50 @@ const initials = (name: string) =>
     .slice(0, 2)
     .join("")
 
+// "Status" is the reference's own label for the unfiltered state, alongside
+// the two statuses its rows actually carry.
+const STATUSES = ["Status", "New", "Lost"] as const
+
 export function RecentLeadsTable() {
+  const [order, setOrder] = React.useState(fixture.recent)
+  const [status, setStatus] = React.useState<(typeof STATUSES)[number]>("Status")
+  const [dragging, setDragging] = React.useState<string | null>(null)
+
+  const rows =
+    status === "Status" ? order : order.filter((r) => r.status === status)
+
+  function dropOn(target: string) {
+    if (!dragging || dragging === target) return
+    setOrder((prev) => {
+      const next = [...prev]
+      const from = next.findIndex((r) => r.company === dragging)
+      const to = next.findIndex((r) => r.company === target)
+      if (from < 0 || to < 0) return prev
+      next.splice(to, 0, next.splice(from, 1)[0])
+      return next
+    })
+  }
+
+  function exportCsv() {
+    const cols = ["Company", "Domain", "Status", "About", "Lead score"]
+    const csv = [
+      cols.join(","),
+      ...rows.map((r) =>
+        [r.company, r.domain, r.status, r.about, `${r.score}%`]
+          .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+          .join(","),
+      ),
+    ].join("\n")
+    const url = URL.createObjectURL(
+      new Blob([csv], { type: "text/csv;charset=utf-8" }),
+    )
+    const a = document.createElement("a")
+    a.href = url
+    a.download = "recent-leads.csv"
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
@@ -75,17 +121,27 @@ export function RecentLeadsTable() {
         <div className="flex flex-wrap items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger render={<Button variant="outline" />}>
-              Status
+              {status}
               <ChevronDown />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>All statuses</DropdownMenuItem>
-              <DropdownMenuItem>New</DropdownMenuItem>
-              <DropdownMenuItem>Working</DropdownMenuItem>
-              <DropdownMenuItem>Lost</DropdownMenuItem>
+              <DropdownMenuRadioGroup
+                value={status}
+                onValueChange={(v) =>
+                  setStatus(v as (typeof STATUSES)[number])
+                }
+              >
+                {STATUSES.map((s) => (
+                  <DropdownMenuRadioItem key={s} value={s}>
+                    {s}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline">Export</Button>
+          <Button variant="outline" onClick={exportCsv}>
+            Export
+          </Button>
         </div>
       </div>
 
@@ -109,12 +165,24 @@ export function RecentLeadsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {fixture.recent.map((lead) => (
-              <TableRow key={lead.company}>
+            {rows.map((lead) => (
+              <TableRow
+                key={lead.company}
+                data-dragging={dragging === lead.company}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={() => {
+                  dropOn(lead.company)
+                  setDragging(null)
+                }}
+                className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
+              >
                 <TableCell className="pl-4">
                   <Button
                     variant="ghost"
                     size="icon-sm"
+                    draggable
+                    onDragStart={() => setDragging(lead.company)}
+                    onDragEnd={() => setDragging(null)}
                     aria-roledescription="sortable"
                     className="cursor-grab text-muted-foreground active:cursor-grabbing"
                   >
@@ -193,9 +261,34 @@ export function RecentLeadsTable() {
                         <MoreHorizontal />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View lead</DropdownMenuItem>
-                        <DropdownMenuItem>Assign owner</DropdownMenuItem>
-                        <DropdownMenuItem>Mark as lost</DropdownMenuItem>
+                        <DropdownMenuItem
+                          render={
+                            <a
+                              href={`https://${lead.domain}`}
+                              target="_blank"
+                              rel="noreferrer"
+                            />
+                          }
+                        >
+                          View customer
+                        </DropdownMenuItem>
+                        {/* The reference offers this, but there is no licence
+                            data anywhere in the fixtures, so it is shown
+                            unavailable rather than wired to something
+                            unrelated. */}
+                        <DropdownMenuItem disabled>
+                          Manage licenses
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          variant="destructive"
+                          onClick={() =>
+                            setOrder((prev) =>
+                              prev.filter((r) => r.company !== lead.company),
+                            )
+                          }
+                        >
+                          Remove customer
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
