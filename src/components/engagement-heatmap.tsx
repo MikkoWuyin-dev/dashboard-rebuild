@@ -24,7 +24,9 @@ const opacityFor = (v: number) => LOW + ((HIGH - LOW) * (v - min)) / (max - min)
 export function EngagementHeatmap() {
   return (
     <Card className="h-90">
-      <CardHeader>
+      {/* Below sm the reference drops the header grid so the title keeps a
+          full-width line instead of wrapping beside the legend. */}
+      <CardHeader className="max-sm:flex max-sm:flex-col">
         <CardTitle>Engagement by day &amp; hour</CardTitle>
         <CardDescription>Open rate by send time</CardDescription>
         <CardAction className="self-end max-sm:mt-2">

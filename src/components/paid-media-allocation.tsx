@@ -1,6 +1,6 @@
 "use client"
 
-import { Cell, Pie, PieChart } from "recharts"
+import { Cell, Label, Pie, PieChart } from "recharts"
 
 import {
   Card,
@@ -14,6 +14,9 @@ import { cn } from "cn"
 import fixture from "@/data/campaigns-fixture.json"
 
 const chartConfig = { value: { label: "Spend" } } satisfies ChartConfig
+
+const TOTAL = fixture.allocation.reduce((sum, s) => sum + s.value, 0)
+const TOTAL_LABEL = `$${TOTAL.toLocaleString("en-US")}`
 
 const FILL = [
   "var(--chart-1)",
@@ -58,6 +61,32 @@ export function PaidMediaAllocation() {
                 {fixture.allocation.map((slice, i) => (
                   <Cell key={slice.label} fill={FILL[i]} />
                 ))}
+                <Label
+                  position="center"
+                  content={({ viewBox }) => {
+                    const vb = (viewBox ?? {}) as { cx?: number; cy?: number }
+                    const cx = vb.cx ?? 100
+                    const cy = vb.cy ?? 100
+                    return (
+                      <text x={cx} y={cy} textAnchor="middle">
+                        <tspan
+                          x={cx}
+                          y={cy}
+                          className="fill-foreground text-2xl font-bold tracking-tight tabular-nums"
+                        >
+                          {TOTAL_LABEL}
+                        </tspan>
+                        <tspan
+                          x={cx}
+                          y={cy + 20}
+                          className="fill-muted-foreground text-xs"
+                        >
+                          Paid media
+                        </tspan>
+                      </text>
+                    )
+                  }}
+                />
               </Pie>
             </PieChart>
           </ChartContainer>
