@@ -1,0 +1,126 @@
+{
+  "metrics": [
+    {
+      "title": "Marketing spend",
+      "value": "$84,300",
+      "delta": "+8.2%",
+      "tone": "success",
+      "note": "from last month"
+    },
+    {
+      "title": "Total revenue",
+      "value": "$1,250.00",
+      "delta": "+12.5%",
+      "tone": "success",
+      "note": "from last month"
+    },
+    {
+      "title": "Cost per lead",
+      "value": "$29.61",
+      "delta": "+12.5%",
+      "tone": "destructive",
+      "note": "from last month"
+    },
+    {
+      "title": "Lead conversion rate",
+      "value": "3.4%",
+      "delta": "+12.5%",
+      "tone": "success",
+      "note": "from last month"
+    }
+  ],
+  "insights": [
+    {
+      "icon": "trending-up",
+      "title": "Win rate up 4 pts",
+      "body": "32% this quarter, driven by faster Proposal-stage exits."
+    },
+    {
+      "icon": "alert-triangle",
+      "title": "Cost per lead climbing",
+      "body": "CPL rose 12.5% while spend grew 8.2%. Socials is the driver."
+    },
+    {
+      "icon": "target",
+      "title": "Q3 forecast gap",
+      "body": "Forecast $1.38M against the $1.5M target, an 8% gap."
+    },
+    {
+      "icon": "sparkles",
+      "title": "Organic outperforming paid",
+      "body": "Organic drives the most first-touch revenue this month."
+    }
+  ],
+  "revenue": {
+    "segments": 40,
+    "stats": [
+      {
+        "label": "Closed",
+        "value": "$412,000",
+        "amount": 412000
+      },
+      {
+        "label": "Target",
+        "value": "$1,500,000",
+        "amount": 1500000
+      },
+      {
+        "label": "Forecast",
+        "value": "$1,380,000",
+        "amount": 1380000
+      }
+    ]
+  },
+  "goals": [
+    {
+      "label": "Pipeline created",
+      "display": "$12,847 / $13,000",
+      "value": 12847,
+      "target": 13000
+    },
+    {
+      "label": "Leads generated",
+      "display": "2,830 / 3,000",
+      "value": 2830,
+      "target": 3000
+    },
+    {
+      "label": "New customers",
+      "display": "459 / 600",
+      "value": 459,
+      "target": 600
+    }
+  ],
+  "pipeline": [
+    {
+      "label": "Lead",
+      "count": 763,
+      "display": "$763K",
+      "share": "38%"
+    },
+    {
+      "label": "Qualified",
+      "count": 482,
+      "display": "$482K",
+      "share": "24%"
+    },
+    {
+      "label": "Proposal",
+      "count": 361,
+      "display": "$361K",
+      "share": "18%"
+    },
+    {
+      "label": "Negotiation",
+      "count": 241,
+      "display": "$241K",
+      "share": "12%"
+    },
+    {
+      "label": "Closed won",
+      "count": 161,
+      "display": "$161K",
+      "share": "8%"
+    }
+  ]
+}
