@@ -37,7 +37,14 @@ export const KILL_MOTION_CSS = `*, *::before, *::after {
   animation: none !important;
   transition: none !important;
   caret-color: transparent !important;
-}`;
+}
+/* Next's dev overlay. devIndicators:false removes its idle badge but not the
+   error toast, which parks itself bottom-left and lands in the shot: one stale
+   HMR error during a run put an "1 Issue" pill into campaigns-dark-390 and
+   nothing else, which reads as a regression on one pair. The reference is a
+   production build and has no such element, so this rule is a no-op there --
+   both sides still run identical logic. */
+nextjs-portal { display: none !important; }`;
 
 const slug = (route) => (route === "/" ? "root" : route.slice(1));
 export const pngPath = (outDir, route, theme, vp) =>
