@@ -126,7 +126,7 @@ export function RecentLeadsTable() {
                 <TableCell>
                   <Item size="xs" className="flex-nowrap p-0">
                     <ItemMedia className="self-center">
-                      <Avatar>
+                      <Avatar size="sm">
                         <AvatarFallback>
                           {lead.company.slice(0, 2)}
                         </AvatarFallback>
@@ -161,7 +161,7 @@ export function RecentLeadsTable() {
                 <TableCell>
                   <AvatarGroup>
                     {lead.owners.map((owner) => (
-                      <Avatar key={owner}>
+                      <Avatar key={owner} size="sm">
                         <AvatarFallback>{initials(owner)}</AvatarFallback>
                       </Avatar>
                     ))}
