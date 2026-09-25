@@ -18,6 +18,30 @@ import { PNG } from "pngjs";
 import { shootAll, ROUTES, THEMES, VIEWPORTS, pngPath } from "./shoot.mjs";
 
 const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
+
+// ROUTES=customers          -> only /customers (leading slash optional)
+// ROUTES=customers,deals    -> those two
+// SKIP_SHOOT=1              -> reuse whatever is already in current/
+// VERBOSE=1                 -> per-shot progress lines
+// A filtered run writes its filter into diffs/report.json so a partial result
+// can never be mistaken for a full one later.
+const ROUTE_FILTER = (process.env.ROUTES || "")
+  .split(",")
+  .map((r) => r.trim())
+  .filter(Boolean)
+  .map((r) => (r === "root" ? "/" : r.startsWith("/") ? r : `/${r}`));
+const SKIP_SHOOT = process.env.SKIP_SHOOT === "1";
+const VERBOSE = process.env.VERBOSE === "1";
+
+const ACTIVE_ROUTES = ROUTE_FILTER.length
+  ? ROUTES.filter((r) => ROUTE_FILTER.includes(r))
+  : ROUTES;
+
+if (ROUTE_FILTER.length && ACTIVE_ROUTES.length === 0) {
+  console.error(`\n  No route matches ROUTES=${process.env.ROUTES}`);
+  console.error(`  Known routes: ${ROUTES.join(" ")}  (use "root" for /)\n`);
+  process.exit(1);
+}
 const CURRENT_DIR = join(process.cwd(), "current");
 const REF_DIR = join(process.cwd(), "reference");
 const DIFFS_DIR = join(process.cwd(), "diffs");
@@ -79,7 +103,8 @@ async function reachable(url, timeoutMs = 2500) {
   }
 }
 
-if (!(await reachable(BASE_URL))) {
+// SKIP_SHOOT never touches the server, so do not gate on reachability there.
+if (!SKIP_SHOOT && !(await reachable(BASE_URL))) {
   console.error(`\n  Nothing is serving ${BASE_URL}.`);
   console.error("  The dev server is not running, or it is on another port.\n");
 
@@ -103,11 +128,29 @@ if (!(await reachable(BASE_URL))) {
   process.exit(1);
 }
 
-console.log(`== Shooting local rebuild (${BASE_URL}) into current/ ==`);
-const shot = await shootAll({ baseUrl: BASE_URL, outDir: CURRENT_DIR });
-if (shot.failures.length) {
-  console.error(`Local capture incomplete (${shot.failures.length} failures) — aborting diff.`);
-  process.exit(1);
+const scope =
+  ACTIVE_ROUTES.length === ROUTES.length
+    ? "all routes"
+    : ACTIVE_ROUTES.join(" ");
+
+if (SKIP_SHOOT) {
+  console.log(`== Reusing existing current/ (SKIP_SHOOT=1) — ${scope} ==`);
+} else {
+  console.log(`== Shooting local rebuild (${BASE_URL}) — ${scope} ==`);
+  const quietLog = { log: () => {}, error: (...a) => console.error(...a) };
+  const shot = await shootAll({
+    baseUrl: BASE_URL,
+    outDir: CURRENT_DIR,
+    routes: ACTIVE_ROUTES,
+    log: VERBOSE ? console : quietLog,
+  });
+  const expected = ACTIVE_ROUTES.length * THEMES.length * VIEWPORTS.length;
+  if (shot.failures.length) {
+    console.error(`Local capture incomplete (${shot.failures.length} failures) — aborting diff.`);
+    for (const f of shot.failures.slice(0, 5)) console.error(`  - ${f.name ?? ""} ${f.error ?? f}`);
+    process.exit(1);
+  }
+  console.log(`   captured ${expected}/${expected}`);
 }
 
 // ---- 2) Compare every current/ PNG against its reference/ counterpart --------
@@ -118,7 +161,7 @@ const browser = await chromium.launch();
 const results = [];
 const heightMismatches = [];
 
-for (const route of ROUTES) {
+for (const route of ACTIVE_ROUTES) {
   for (const theme of THEMES) {
     for (const vp of VIEWPORTS) {
       const name = `${slug(route)}-${theme}-${vp.width}`;
@@ -227,6 +270,12 @@ writeFileSync(
     {
       baseUrl: BASE_URL,
       threshold: 0.1,
+      // A filtered run covers only some routes. Recorded so a partial report
+      // is never read as a full one.
+      routesCovered: ACTIVE_ROUTES,
+      partial: ACTIVE_ROUTES.length !== ROUTES.length,
+      reusedCurrent: SKIP_SHOOT,
+      generatedAt: new Date().toISOString(),
       compared: scored.length,
       meanPercent: mean,
       meanShellPercent: withShell.length

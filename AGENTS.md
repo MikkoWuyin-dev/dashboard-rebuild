@@ -40,6 +40,17 @@ reports 42 connection failures. Two failed runs were caused by exactly this.
   Terminal 2:  pnpm capture:ref             # wait for "Captured 42/42"
                $env:BASE_URL="http://localhost:3000"; pnpm diff
 
+Iterating on one route? Shoot only that route -- 6 shots instead of 42:
+
+  $env:ROUTES="customers"; pnpm diff     # one route
+  $env:ROUTES="customers,deals"          # several ("root" means /)
+  $env:SKIP_SHOOT="1"                    # reuse current/, just re-compare
+  $env:VERBOSE="1"                       # per-shot progress lines
+
+A filtered run records routesCovered and partial:true in diffs/report.json, so
+a partial result cannot be mistaken for a full one. Run an unfiltered diff
+before believing an overall mean.
+
 Never run the diff on a partial reference set. A capture that stops early
 leaves reference/ mixed across two mask definitions, producing numbers that
 look real and are not -- the one failure this harness cannot catch for you.
