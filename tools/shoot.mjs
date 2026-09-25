@@ -270,7 +270,13 @@ export async function shootAll({ baseUrl, outDir, resume = false, log = console,
   );
   mkdirSync(outDir, { recursive: true });
 
-  const browser = await chromium.launch();
+  // --disable-lcd-text forces greyscale text antialiasing. Without it Chromium
+  // picks subpixel (LCD) or greyscale per compositing layer, and which one a
+  // page gets is a race: the same markup came out LCD on /deals and greyscale
+  // on /customers, and /leads and /settings landed on opposite sides of it
+  // between the reference and local runs. That is text ghosting across a whole
+  // page for no reason, and it makes the numbers unreproducible run to run.
+  const browser = await chromium.launch({ args: ["--disable-lcd-text"] });
   const failures = [];
   const stitched = [];
 
