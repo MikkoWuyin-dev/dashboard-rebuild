@@ -52,10 +52,12 @@ export function CustomerHealthGauge() {
           <ChartContainer config={chartConfig} className="size-45 shrink-0">
             <RadialBarChart
               data={[{ name: "score", value: healthScore }]}
-              startAngle={220}
-              endAngle={-40}
+              startAngle={225}
+              endAngle={-45}
               innerRadius={72}
               outerRadius={88}
+              margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+              barCategoryGap={0}
             >
               <PolarAngleAxis
                 type="number"
@@ -73,11 +75,11 @@ export function CustomerHealthGauge() {
                 <Label
                   position="center"
                   content={({ viewBox }) => {
-                    const { cx, cy } = (viewBox ?? {}) as {
-                      cx?: number
-                      cy?: number
-                    }
-                    if (cx == null || cy == null) return null
+                    const vb = (viewBox ?? {}) as { cx?: number; cy?: number }
+                    // The 180x180 surface centres at 90,90; fall back to that
+                    // rather than rendering nothing if viewBox omits cx/cy.
+                    const cx = vb.cx ?? 90
+                    const cy = vb.cy ?? 90
                     return (
                       <text x={cx} y={cy} textAnchor="middle">
                         <tspan

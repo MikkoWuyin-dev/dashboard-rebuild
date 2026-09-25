@@ -118,16 +118,16 @@ export function CustomersTable() {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <Button variant="outline" size="sm">
+          <Button variant="outline">
             All customers
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline">
             Comfortable
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline">
             Columns
           </Button>
-          <Button variant="outline" size="sm">
+          <Button variant="outline">
             Export
           </Button>
         </div>
