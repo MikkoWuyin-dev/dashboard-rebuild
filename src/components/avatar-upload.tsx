@@ -52,20 +52,19 @@ export function AvatarUpload({ src, fallback }: { src: string; fallback: string 
             className="pointer-events-none absolute inset-0 z-10 flex origin-center items-center justify-center rounded-full bg-accent/50 opacity-0 backdrop-blur-xs transition-all duration-300"
           >
             <Upload className="size-4 text-accent-foreground duration-300" />
-            <span className="sr-only">Upload</span>
           </div>
+          {/* In flow inside the button, not layered over it: the button has no
+              size of its own, so the avatar is what gives it one. Positioning
+              the avatar absolutely collapsed the button's muted circle. */}
+          <Avatar size="lg" className="pointer-events-none bg-transparent">
+            <AvatarImage
+              src={preview ?? src}
+              alt={filename}
+              className="aspect-square size-full rounded-full object-cover object-center"
+            />
+            <AvatarFallback>{fallback}</AvatarFallback>
+          </Avatar>
         </button>
-        <Avatar
-          size="lg"
-          className="pointer-events-none absolute inset-0 z-20 m-auto bg-transparent"
-        >
-          <AvatarImage
-            src={preview ?? src}
-            alt={filename}
-            className="aspect-square size-full rounded-full object-cover object-center"
-          />
-          <AvatarFallback>{fallback}</AvatarFallback>
-        </Avatar>
       </div>
       <div className="flex flex-col gap-2.5">
         <div className="flex flex-col gap-1">
